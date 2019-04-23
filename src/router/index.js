@@ -69,10 +69,34 @@ export const constantRoutes = [
         meta: { title: 'Category', icon: 'dashboard' }
       },
       {
+        path: 'category/create',
+        name: 'Create Category',
+        component: () => import('@/views/blog/category/create'),
+        hidden: true
+      },
+      {
+        path: 'category/edit/:id',
+        name: 'Edit Category',
+        component: () => import('@/views/blog/category/edit'),
+        hidden: true
+      },
+      {
         path: 'tag',
         name: 'Tag',
         component: () => import('@/views/blog/tag/index'),
         meta: { title: 'Tag', icon: 'dashboard' }
+      },
+      {
+        path: 'tag/create',
+        name: 'Create Tag',
+        component: () => import('@/views/blog/tag/create'),
+        hidden: true
+      },
+      {
+        path: 'tag/edit/:id',
+        name: 'Edit Tag',
+        component: () => import('@/views/blog/tag/edit'),
+        hidden: true
       },
       {
         path: 'article',
@@ -81,10 +105,34 @@ export const constantRoutes = [
         meta: { title: 'Article', icon: 'dashboard' }
       },
       {
+        path: 'article/create',
+        name: 'Create Article',
+        component: () => import('@/views/blog/article/create'),
+        hidden: true
+      },
+      {
+        path: 'article/edit/:id',
+        name: 'Edit Article',
+        component: () => import('@/views/blog/article/edit'),
+        hidden: true
+      },
+      {
         path: 'comment',
         name: 'Comment',
         component: () => import('@/views/blog/comment/index'),
         meta: { title: 'Comment', icon: 'dashboard' }
+      },
+      // {
+      //   path: 'comment/create',
+      //   name: 'Create Comment',
+      //   component: () => import('@/views/blog/comment/create'),
+      //   hidden: true
+      // },
+      {
+        path: 'comment/edit/:id',
+        name: 'Edit Comment',
+        component: () => import('@/views/blog/comment/edit'),
+        hidden: true
       }
     ]
   },

@@ -1,5 +1,6 @@
 import request from '@/utils/request'
 
+/** ----- open api ----- */
 export function login(data) {
   return request({
     url: '/auth/login',
@@ -7,7 +8,14 @@ export function login(data) {
     data
   })
 }
-
+export function pictureUpload(data) {
+  return request({
+    url: '/file/upload',
+    method: 'post',
+    data
+  })
+}
+/** ----- open api end ----- */
 export function logout() {
   return request({
     url: '/auth/logout',
@@ -78,6 +86,13 @@ export function categoryList(params) {
   })
 }
 
+export function categoryAll() {
+  return request({
+    url: 'category/all',
+    method: 'get'
+  })
+}
+
 export function categoryDetail(id) {
   return request({
     url: 'category/' + id,
@@ -108,12 +123,27 @@ export function categoryDelete(id) {
   })
 }
 
+export function batchDeleteCategory(data) {
+  return request({
+    url: 'category/batch',
+    method: 'delete',
+    data
+  })
+}
+
 /** ----- tag ----- */
 export function tagList(params) {
   return request({
     url: 'tag',
     method: 'get',
     params: params
+  })
+}
+
+export function tagAll() {
+  return request({
+    url: 'tag/all',
+    method: 'get'
   })
 }
 
@@ -144,6 +174,14 @@ export function tagDelete(id) {
   return request({
     url: 'tag/' + id,
     method: 'delete'
+  })
+}
+
+export function batchDeleteTag(data) {
+  return request({
+    url: 'tag/batch',
+    method: 'delete',
+    data
   })
 }
 

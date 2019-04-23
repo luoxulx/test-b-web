@@ -1,30 +1,35 @@
 <template>
   <div class="app-container">
     <el-container>
+      <el-header height="30">
+        <el-button type="default" size="mini" @click="refreshList">刷新</el-button>
+        <el-button type="danger" size="mini" @click="batchDelete">批量删除</el-button>
+        <el-button type="primary" size="mini">
+          <router-link :to="{path: '/blog/article/create'}">Create</router-link>
+        </el-button>
+      </el-header>
       <el-main>
-        <div class="top-tool-bar">
-          <el-button type="default" size="mini" @click="refreshList">刷新</el-button>
-          <el-button type="danger" size="mini" @click="batchDelete">批量删除</el-button>
-        </div>
         <el-table v-loading="loadingIcon" :data="articleList" :element-loading-text="loadingText" tooltip-effect="dark" element-loading-spinner="el-icon-loading" border style="width: 100%" size="small" @selection-change="handleSelectionChange">
-          <el-table-column type="selection" width="55" />
+          <el-table-column type="selection" width="50" />
           <el-table-column prop="id" label="ID" width="50" />
-          <el-table-column prop="category_name" label="分类" width="80" show-overflow-tooltip />
+          <el-table-column prop="category_name" label="Category" width="80" show-overflow-tooltip />
           <el-table-column prop="user_name" label="User" width="80" show-overflow-tooltip />
           <el-table-column prop="title" label="Title" width="200" show-overflow-tooltip />
           <el-table-column prop="description" label="Description" show-overflow-tooltip />
-          <el-table-column prop="updated_at" label="Update At" width="150" show-overflow-tooltip />
+          <el-table-column prop="updated_at" label="Update At" width="150" />
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
-              <el-button type="warning" size="mini">编辑</el-button>
+              <el-button type="warning" size="mini">
+                <router-link :to="{path: '/blog/article/edit/'+scope.row.id}">Edit</router-link>
+              </el-button>
               <el-button type="danger" size="mini" @click="deleteArticle(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
-        <el-footer class="page-footer">
-          <el-pagination :total="listTotal" :current-page.sync="listCurrent" :page-sizes="listPageSelect" :page-size.sync="listPerPage" layout="total, sizes, prev, pager, next, jumper" background prev-text="上一页" next-text="下一页" @size-change="clickChangePerPage" @current-change="clickChangeCurrentPage" />
-        </el-footer>
       </el-main>
+      <el-footer height="0">
+        <el-pagination :total="listTotal" :current-page.sync="listCurrent" :page-sizes="listPageSelect" :page-size.sync="listPerPage" layout="total, sizes, prev, pager, next, jumper" background prev-text="上一页" next-text="下一页" @size-change="clickChangePerPage" @current-change="clickChangeCurrentPage" />
+      </el-footer>
     </el-container>
   </div>
 </template>
@@ -66,11 +71,10 @@ export default {
       })
     },
     handleSelectionChange(val) {
-      const tempIds = []
+      this.multipleSelected = []
       for (var i in val) {
-        tempIds.push(val[i].id)
+        this.multipleSelected.push(val[i].id)
       }
-      this.multipleSelected = tempIds
     },
     batchDelete() {
       if (this.multipleSelected.length === 0) {
@@ -110,12 +114,3 @@ export default {
   }
 }
 </script>
-
-<style>
-  .top-tool-bar{
-    margin-bottom: 10px;
-  }
-  .page-footer{
-    margin-top: 20px;
-  }
-</style>
