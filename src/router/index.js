@@ -137,6 +137,32 @@ export const constantRoutes = [
     ]
   },
   {
+    path: '/video',
+    component: Layout,
+    redirect: 'index',
+    // meta: { title: 'Video', 'icon': 'link' },
+    children: [
+      {
+        path: 'index',
+        name: 'Video',
+        component: () => import('@/views/video/index'),
+        meta: { title: 'Video', 'icon': 'link' }
+      },
+      {
+        path: 'create',
+        name: 'Create Video',
+        component: () => import('@/views/video/create'),
+        hidden: true
+      },
+      {
+        path: 'edit/:id',
+        name: 'Edit Video',
+        component: () => import('@/views/video/edit'),
+        hidden: true
+      }
+    ]
+  },
+  {
     path: 'external-link',
     component: Layout,
     redirect: 'xxx',

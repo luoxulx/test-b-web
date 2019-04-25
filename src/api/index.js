@@ -15,6 +15,20 @@ export function pictureUpload(data) {
     data
   })
 }
+export function picturePatchUpload(data) {
+  return request({
+    url: '/file/patch_upload',
+    method: 'post',
+    data
+  })
+}
+export function getBingPicture(param) {
+  return request({
+    url: '/bing/picture',
+    method: 'get',
+    params: param
+  })
+}
 /** ----- open api end ----- */
 export function logout() {
   return request({
@@ -220,6 +234,41 @@ export function commentUpdate(data) {
 export function commentDelete(id) {
   return request({
     url: 'comment/' + id,
+    method: 'delete'
+  })
+}
+
+/** ----- comment ----- */
+export function videoList(params) {
+  return request({
+    url: 'video',
+    method: 'get',
+    params: params
+  })
+}
+export function videoDetail(id) {
+  return request({
+    url: 'video/' + id,
+    method: 'get'
+  })
+}
+export function videoCreate(data) {
+  return request({
+    url: 'video',
+    method: 'post',
+    data
+  })
+}
+export function videoUpdate(data) {
+  return request({
+    url: 'video/' + data.id,
+    method: 'put',
+    data
+  })
+}
+export function videoDelete(id) {
+  return request({
+    url: 'video/' + id,
     method: 'delete'
   })
 }

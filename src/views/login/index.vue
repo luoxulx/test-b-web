@@ -1,5 +1,5 @@
 <template>
-  <div class="login-container">
+  <div class="login-container" :style="[backgroundStyle]">
     <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form" auto-complete="on" label-position="left">
 
       <div class="title-container">
@@ -52,7 +52,7 @@
 </template>
 
 <script>
-
+import { getBingPicture } from '@/api'
 export default {
   name: 'Login',
   data() {
@@ -74,7 +74,10 @@ export default {
       },
       loading: false,
       passwordType: 'password',
-      redirect: undefined
+      redirect: undefined,
+      backgroundStyle: {
+        'background-image': ''
+      }
     }
   },
   watch: {
@@ -84,6 +87,9 @@ export default {
       },
       immediate: true
     }
+  },
+  created() {
+    // this.handleGetBingPicture()
   },
   methods: {
     showPwd() {
@@ -110,6 +116,20 @@ export default {
           console.log('error submit!!')
           return false
         }
+      })
+    },
+    handleGetBingPicture() {
+      const param = {}
+      const idxArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+      const index = Math.floor(Math.random() * 16)
+      param.format = 'js'
+      param.n = 1
+      param.idx = idxArray[index]
+      getBingPicture(param).then(response => {
+        this.backgroundStyle['background-image'] = response.data.images[0].real_url
+      }).catch(error => {
+        console.log(error)
+        this.backgroundStyle['background-image'] = 'https://cn.bing.com/th?id=OHR.RainforestMoss_ZH-CN2878951870_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp'
       })
     }
   }
@@ -172,7 +192,7 @@ $light_gray:#eee;
   min-height: 100%;
   width: 100%;
   // background-color: $bg;
-  background-image: url("https://www.wallpapermaiden.com/wallpaper/2822/download/2560x1440/ocean-mountain-grass-coastline-mini-houses.jpg");
+  background-image: url("https://cn.bing.com/th?id=OHR.RainforestMoss_ZH-CN2878951870_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp");
   overflow: hidden;
 
   .login-form {

@@ -107,10 +107,16 @@ export default {
         plugins: plugins,
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
+        paste_data_images: true,
+        paste_preprocess(plugin, args) {
+          console.log(args)
+        },
         code_dialog_height: 450,
         code_dialog_width: 1000,
         advlist_bullet_styles: 'square',
         advlist_number_styles: 'default',
+        image_title: false,
+        image_advtab: true,
         imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
         content_css: ['//fonts.googleapis.com/css?family=Lato:300,300i,400,400i', '//www.tiny.cloud/css/codepen.min.css'],
         default_link_target: '_blank',
@@ -131,11 +137,14 @@ export default {
             _this.fullscreen = e.state
           })
         },
+        images_upload_credentials: true,
+        // images_upload_base_path: 'aa',
+        // images_upload_url: 'bb.php',
         images_upload_handler(blobInfo, success, failure, progress) {
           progress(0)
           const uploadFormData = new FormData()
           uploadFormData.append('file', blobInfo.blob())
-          uploadFormData.append('dir', 'article')
+          uploadFormData.append('dir', 'editor')
           progress(10)
           pictureUpload(uploadFormData).then(response => {
             progress(95)
