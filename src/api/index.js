@@ -15,7 +15,7 @@ export function pictureUpload(data) {
     data
   })
 }
-export function picturePatchUpload(data) {
+export function filePatchUpload(data) {
   return request({
     url: '/file/patch_upload',
     method: 'post',
