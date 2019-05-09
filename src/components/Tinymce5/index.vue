@@ -96,8 +96,10 @@ export default {
     initTinymce() {
       const _this = this
       window.tinymce.init({
+        api_key: 'ur9ww0d6omfe1qfno8hinl417ubih0jn2rd6svs30q2jmwpq',
         // language: this.language,
         language: 'zh_CN',
+        tinydrive_token_provider: 'xx2',
         selector: `#${this.tinymceId}`,
         height: this.height,
         body_class: 'panel-body ',
