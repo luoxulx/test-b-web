@@ -53,6 +53,13 @@
         </el-row>
       </el-main>
     </el-container>
+    <el-dialog title="Trace" :visible.sync="exceptionDialog">
+      <div style="white-space: pre-wrap;background: #171718;color: #fff; padding: 5px;">{{ exceptionTrace }}</div>
+      <span slot="footer" class="dialog-footer">
+        <el-button size="mini" @click="exceptionDialog = false">取 消</el-button>
+        <el-button type="primary" size="mini" @click="exceptionDialog = false">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -73,7 +80,9 @@ export default {
       nextUrl: '',
       filePath: '',
       size: '',
-      levelColors: []
+      levelColors: [],
+      exceptionDialog: false,
+      exceptionTrace: ''
     }
   },
   created() {
@@ -114,7 +123,8 @@ export default {
       })
     },
     showException(row) {
-      console.log(row)
+      this.exceptionDialog = true
+      this.exceptionTrace = row.trace
     }
   }
 }
