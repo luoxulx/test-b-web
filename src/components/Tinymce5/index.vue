@@ -96,10 +96,10 @@ export default {
     initTinymce() {
       const _this = this
       window.tinymce.init({
-        api_key: 'ur9ww0d6omfe1qfno8hinl417ubih0jn2rd6svs30q2jmwpq',
+        // api_key: 'ur9ww0d6omfe1qfno8hinl417ubih0jn2rd6svs30q2jmwpq',
         // language: this.language,
         language: 'zh_CN',
-        tinydrive_token_provider: 'xx2',
+        // tinydrive_token_provider: 'xx2',
         selector: `#${this.tinymceId}`,
         height: this.height,
         body_class: 'panel-body ',
@@ -110,9 +110,9 @@ export default {
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         paste_data_images: true,
-        paste_preprocess(plugin, args) {
-          console.log(args)
-        },
+        // paste_preprocess(plugin, args) {
+        //   console.log(args)
+        // },
         code_dialog_height: 450,
         code_dialog_width: 1000,
         advlist_bullet_styles: 'square',
@@ -140,8 +140,6 @@ export default {
           })
         },
         images_upload_credentials: true,
-        // images_upload_base_path: 'aa',
-        // images_upload_url: 'bb.php',
         images_upload_handler(blobInfo, success, failure, progress) {
           progress(0)
           const uploadFormData = new FormData()
