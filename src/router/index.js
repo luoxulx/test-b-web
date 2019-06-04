@@ -180,6 +180,18 @@ export const constantRoutes = [
     ]
   },
 
+  {
+    path: '/logs',
+    component: Layout,
+    redirect: '/logs',
+    children: [{
+      path: 'logs',
+      name: 'Logs',
+      component: () => import('@/views/logs/index'),
+      meta: { title: 'Logs', icon: 'table' }
+    }]
+  },
+
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]

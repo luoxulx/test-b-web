@@ -30,6 +30,7 @@ export function getBingPicture(param) {
   })
 }
 /** ----- open api end ----- */
+
 export function logout() {
   return request({
     url: '/auth/logout',
@@ -238,7 +239,7 @@ export function commentDelete(id) {
   })
 }
 
-/** ----- comment ----- */
+/** ----- video ----- */
 export function videoList(params) {
   return request({
     url: 'video',
@@ -270,5 +271,32 @@ export function videoDelete(id) {
   return request({
     url: 'video/' + id,
     method: 'delete'
+  })
+}
+
+/** ----- system log view ----- */
+export function systemLogList(file, offset) {
+  let uri = 'system/logs'
+  if (file || file !== undefined) {
+    uri = uri + '/' + file
+  }
+  return request({
+    url: uri,
+    method: 'get',
+    params: offset
+  })
+}
+
+export function logPageUrl(uri) {
+  return request({
+    url: uri,
+    method: 'get'
+  })
+}
+
+export function logTraceDetail(uri) {
+  return request({
+    url: uri,
+    method: 'get'
   })
 }
