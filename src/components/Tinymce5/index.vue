@@ -106,6 +106,7 @@ export default {
         body_class: 'panel-body ',
         object_resizing: false,
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
+        toolbar_items_size: 'small',
         menubar: this.menubar,
         plugins: plugins,
         codesample_languages: codesample,
