@@ -36,6 +36,9 @@
               <el-form-item prop="is_draft" label="Draft">
                 <el-switch v-model="articleForm.is_draft" />
               </el-form-item>
+              <el-form-item prop="published_at" label="发布时间">
+                <el-date-picker v-model="articleForm.published_at" type="datetime" placeholder="发布时间" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" />
+              </el-form-item>
               <el-form-item prop="content" label="Content">
                 <tinymce5 ref="contentEditor" v-model="articleForm.content" :height="400" />
               </el-form-item>
@@ -73,6 +76,7 @@ const defaultArticleForm = {
   user_id: undefined,
   tags: [],
   is_draft: false,
+  published_at: '',
   view_count: 0,
   title: '',
   slug: '',
@@ -128,19 +132,28 @@ export default {
           this.submitLoading = true
           if (this.isEdit === true) {
             articleUpdate(this.articleForm).then(response => {
-              // this.$message.success('successful')
               this.articleForm = Object.assign({}, defaultArticleForm)
+              if (response.sattus === false) {
+                return false
+              } else {
+                this.$message.success('update successful')
+                this.$router.push('/blog/article')
+              }
             }).catch(error => {
               console.error(error)
+              return false
             })
           } else {
             articleCreate(this.articleForm).then(response => {
-              // this.$message.success('successful')
+              if (response.status === false) {
+                return false
+              } else {
+                this.$message.success('create successful')
+                this.$router.push('/blog/article')
+              }
             })
           }
-          this.$message.success(this.submitButton + 'successful')
           this.submitLoading = false
-          this.$router.push('/blog/article')
         } else {
           return false
         }

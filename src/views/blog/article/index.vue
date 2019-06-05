@@ -69,6 +69,7 @@ export default {
   },
   methods: {
     refreshList() {
+      this.loadingIcon = true
       this.articlePageList()
     },
     articlePageList() {

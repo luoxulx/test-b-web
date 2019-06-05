@@ -79,19 +79,28 @@ export default {
           this.submitLoading = true
           if (this.isEdit === true) {
             videoUpdate(this.videoForm).then(response => {
-              // this.$message.success('successful')
               this.videoForm = Object.assign({}, defaultVideoForm)
+              if (response.sattus === false) {
+                return false
+              } else {
+                this.$message.success('update successful')
+                this.$router.push('/video/index')
+              }
             }).catch(error => {
               console.error(error)
+              return false
             })
           } else {
             videoCreate(this.videoForm).then(response => {
-              // this.$message.success('successful')
+              if (response.sattus === false) {
+                return false
+              } else {
+                this.$message.success('create successful')
+                this.$router.push('/video/index')
+              }
             })
           }
-          this.$message.success(this.submitButton + 'successful')
           this.submitLoading = false
-          this.$router.push('/video/index')
         } else {
           return false
         }

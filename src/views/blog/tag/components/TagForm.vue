@@ -77,19 +77,28 @@ export default {
           this.submitLoading = true
           if (this.isEdit === true) {
             tagUpdate(this.tagForm).then(response => {
-              // this.$message.success('successful')
               this.tagForm = Object.assign({}, defaultTagForm)
+              if (response.sattus === false) {
+                return false
+              } else {
+                this.$message.success('update successful')
+                this.$router.push('/blog/tag')
+              }
             }).catch(error => {
               console.error(error)
+              return false
             })
           } else {
             tagCreate(this.tagForm).then(response => {
-              // this.$message.success('successful')
+              if (response.sattus === false) {
+                return false
+              } else {
+                this.$message.success('create successful')
+                this.$router.push('/blog/tag')
+              }
             })
           }
-          this.$message.success(this.submitButton + 'successful')
           this.submitLoading = false
-          this.$router.push('/blog/tag')
         } else {
           return false
         }
