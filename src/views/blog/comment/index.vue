@@ -5,7 +5,7 @@
         <el-button type="default" size="mini" @click="refreshList">刷新</el-button>
         <el-button type="danger" size="mini" @click="batchDelete">批量删除</el-button>
         <!--<el-button type="primary" size="mini">-->
-          <!--<router-link :to="{path: '/blog/comment/create'}">Create</router-link>-->
+        <!--<router-link :to="{path: '/blog/comment/create'}">Create</router-link>-->
         <!--</el-button>-->
       </el-header>
       <el-main>

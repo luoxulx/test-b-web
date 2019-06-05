@@ -7,6 +7,7 @@
 <script>
 import plugins from './plugins'
 import toolbar from './toolbar'
+import codesample from './codesample'
 import { pictureUpload } from '@/api'
 export default {
   name: 'Tinymce5',
@@ -107,6 +108,8 @@ export default {
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
         menubar: this.menubar,
         plugins: plugins,
+        codesample_languages: codesample,
+        codesample_content_css: [''],
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         paste_data_images: true,

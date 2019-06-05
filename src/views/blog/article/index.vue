@@ -15,7 +15,13 @@
           <el-table-column prop="category_name" label="Category" width="80" show-overflow-tooltip />
           <el-table-column prop="user_name" label="User" width="80" show-overflow-tooltip />
           <el-table-column prop="title" label="Title" width="200" show-overflow-tooltip />
-          <el-table-column prop="description" label="Description" show-overflow-tooltip />
+          <el-table-column label="Description" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <el-tooltip class="item" effect="dark" content="点击打开预览" placement="left">
+                <p @click="showArticleContent(scope.row)">{{ scope.row.description }}</p>
+              </el-tooltip>
+            </template>
+          </el-table-column>
           <el-table-column prop="updated_at" label="Update At" width="150" />
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
@@ -31,6 +37,11 @@
         <el-pagination :total="listTotal" :current-page.sync="listCurrent" :page-sizes="listPageSelect" :page-size.sync="listPerPage" layout="total, sizes, prev, pager, next, jumper" background prev-text="上一页" next-text="下一页" @size-change="clickChangePerPage" @current-change="clickChangeCurrentPage" />
       </el-footer>
     </el-container>
+    <!--预览 content-->
+    <el-dialog title="预览" :visible.sync="articleContentVisible">
+      <div v-html="articleContentValue" />
+      <span slot="footer" class="dialog-footer"><el-button type="primary" size="mini" @click="articleContentVisible = false">关 闭</el-button></span>
+    </el-dialog>
   </div>
 </template>
 
@@ -47,7 +58,9 @@ export default {
       listTotal: 0,
       listCurrent: 1,
       listPageSelect: [10, 20, 50, 100, 200],
-      listPerPage: 10
+      listPerPage: 10,
+      articleContentVisible: false,
+      articleContentValue: ''
     }
   },
   created() {
@@ -110,6 +123,10 @@ export default {
     clickChangeCurrentPage(val) {
       this.listCurrent = val
       this.refreshList()
+    },
+    showArticleContent(row) {
+      this.articleContentVisible = true
+      this.articleContentValue = row.content
     }
   }
 }
