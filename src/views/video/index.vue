@@ -16,7 +16,11 @@
           <el-table-column prop="size" label="Size" width="80" />
           <el-table-column prop="category_name" label="Category" width="120" show-overflow-tooltip />
           <el-table-column prop="user_name" label="User" width="95" show-overflow-tooltip />
-          <el-table-column prop="original_name" label="Name" width="95" show-overflow-tooltip />
+          <el-table-column label="Name" width="95">
+            <template slot-scope="scope">
+              <span @click="playThisVideo(scope.row)">{{ scope.row.original_name }}</span>
+            </template>
+          </el-table-column>
           <el-table-column prop="media_pic" label="Media Poster" show-overflow-tooltip />
           <el-table-column prop="media_url" label="Media" show-overflow-tooltip />
           <el-table-column prop="description" label="Video Description" show-overflow-tooltip />
@@ -35,6 +39,16 @@
         <el-pagination :total="listTotal" :current-page.sync="listCurrent" :page-sizes="listPageSelect" :page-size.sync="listPerPage" layout="total, sizes, prev, pager, next, jumper" background prev-text="上一页" next-text="下一页" @size-change="clickChangePerPage" @current-change="clickChangeCurrentPage" />
       </el-footer>
     </el-container>
+
+    <el-dialog title="Video" :visible.sync="playVideo">
+      <div>
+        <video controls autoplay>
+          <source :src="videoSrc" type="video/mp4" />
+          您的浏览器不支持 video 标签。
+        </video>
+      </div>
+      <span slot="footer" class="dialog-footer"><el-button type="primary" @click="playVideo = false">确 定</el-button></span>
+    </el-dialog>
   </div>
 </template>
 
@@ -44,6 +58,8 @@ export default {
   name: 'VideoIndex',
   data() {
     return {
+      playVideo: false,
+      videoSrc: '',
       loadingIcon: true,
       loadingText: '数据加载中...',
       videoList: [],
@@ -116,6 +132,10 @@ export default {
     clickChangeCurrentPage(val) {
       this.listCurrent = val
       this.refreshList()
+    },
+    playThisVideo(row) {
+      this.playVideo = true
+      this.videoSrc = row.media_url
     }
   }
 }

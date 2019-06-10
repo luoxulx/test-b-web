@@ -34,7 +34,7 @@
 import { videoUpdate, videoCreate, videoDetail } from '@/api'
 const defaultVideoForm = {
   id: undefined,
-  original_name: 0,
+  original_name: '',
   media_pic: '',
   media_url: '',
   description: ''
