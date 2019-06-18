@@ -8,9 +8,9 @@
         </el-button>
       </el-header>
       <el-main>
-        <el-form ref="articleFormRef" :model="articleForm" :rules="articleFormRule" size="mini" label-width="100px">
+        <el-form ref="articleFormRef" :model="articleForm" :rules="articleFormRule" size="mini" label-width="135px">
           <el-tabs v-model="activeTagName" type="border-card">
-            <el-tab-pane label="Chinaese" name="first">
+            <el-tab-pane label="Chinese" name="first">
               <el-form-item prop="category_id" label="Category">
                 <el-select v-model="articleForm.category_id" clearable filterable required>
                   <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id" />

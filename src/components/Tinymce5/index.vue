@@ -97,20 +97,26 @@ export default {
     initTinymce() {
       const _this = this
       window.tinymce.init({
-        // api_key: 'ur9ww0d6omfe1qfno8hinl417ubih0jn2rd6svs30q2jmwpq',
         // language: this.language,
+        // lx-new-start
+        // tinydrive_token_provider: process.env.VUE_APP_BASE_API + 'auth/tiny/token',
+        // tinydrive_dropbox_app_key: 'aaa2',
+        // tinydrive_google_drive_key: 'aaa3',
+        // tinydrive_google_drive_client_id: 'aaa4',
+        // lx-end
         language: 'zh_CN',
-        // tinydrive_token_provider: 'xx2',
         selector: `#${this.tinymceId}`,
         height: this.height,
-        body_class: 'panel-body ',
+        body_class: 'panel-body',
         object_resizing: false,
         toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
         toolbar_items_size: 'small',
         menubar: this.menubar,
         plugins: plugins,
         codesample_languages: codesample,
-        codesample_content_css: [''],
+        browser_spellcheck: true,
+        spellchecker_rpc_url: process.env.VUE_APP_BASE_API + 'open/tiny/spellchecker',
+        // codesample_content_css: [''],
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         paste_data_images: true,

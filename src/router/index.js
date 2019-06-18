@@ -54,19 +54,40 @@ export const constantRoutes = [
       meta: { title: 'Dashboard', icon: 'dashboard' }
     }]
   },
+  {
+    path: '/administration',
+    component: Layout,
+    redirect: 'setting',
+    name: 'Administration',
+    meta: { title: 'Administration', icon: 'setting0' },
+    children: [
+      {
+        path: 'user',
+        name: 'User',
+        component: () => import('@/views/administration/user/index'),
+        meta: { title: 'User', icon: 'user0' }
+      },
+      {
+        path: 'setting',
+        name: 'Setting',
+        component: () => import('@/views/administration/setting'),
+        meta: { title: 'Setting', icon: 'setting' }
+      }
+    ]
+  },
 
   {
     path: '/blog',
     component: Layout,
     redirect: 'article',
     name: 'Blog',
-    meta: { title: 'Blog', icon: 'dashboard' },
+    meta: { title: 'Blog', icon: 'blogger' },
     children: [
       {
         path: 'category',
         name: 'Category',
         component: () => import('@/views/blog/category/index'),
-        meta: { title: 'Category', icon: 'dashboard' }
+        meta: { title: 'Category', icon: 'category' }
       },
       {
         path: 'category/create',
@@ -84,7 +105,7 @@ export const constantRoutes = [
         path: 'tag',
         name: 'Tag',
         component: () => import('@/views/blog/tag/index'),
-        meta: { title: 'Tag', icon: 'dashboard' }
+        meta: { title: 'Tag', icon: 'tag' }
       },
       {
         path: 'tag/create',
@@ -102,7 +123,7 @@ export const constantRoutes = [
         path: 'article',
         name: 'Article',
         component: () => import('@/views/blog/article/index'),
-        meta: { title: 'Article', icon: 'dashboard' }
+        meta: { title: 'Article', icon: 'article' }
       },
       {
         path: 'article/create',
@@ -120,7 +141,7 @@ export const constantRoutes = [
         path: 'comment',
         name: 'Comment',
         component: () => import('@/views/blog/comment/index'),
-        meta: { title: 'Comment', icon: 'dashboard' }
+        meta: { title: 'Comment', icon: 'comment' }
       },
       // {
       //   path: 'comment/create',
@@ -140,13 +161,13 @@ export const constantRoutes = [
     path: '/video',
     component: Layout,
     redirect: 'index',
-    // meta: { title: 'Video', 'icon': 'link' },
+    // meta: { title: 'Video', 'icon': 'video' },
     children: [
       {
         path: 'index',
         name: 'Video',
         component: () => import('@/views/video/index'),
-        meta: { title: 'Video', 'icon': 'link' }
+        meta: { title: 'Video', 'icon': 'video' }
       },
       {
         path: 'create',
@@ -188,7 +209,7 @@ export const constantRoutes = [
       path: 'logs',
       name: 'Logs',
       component: () => import('@/views/logs/index'),
-      meta: { title: 'Logs', icon: 'table' }
+      meta: { title: 'Logs', icon: 'logs' }
     }]
   },
 
