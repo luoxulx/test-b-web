@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { MessageBox, Message } from 'element-ui'
+import { Message } from 'element-ui'
 import store from '@/store'
 import { getToken } from '@/utils/auth'
 
@@ -25,7 +25,7 @@ service.interceptors.request.use(
   },
   error => {
     // do something with request error
-    console.log(error) // for debug
+    // console.log(error) // for debug
     return Promise.reject(error)
   }
 )
@@ -52,23 +52,23 @@ service.interceptors.response.use(
         duration: 2000
       })
       // 50008: Illegal token; 50012: Other clients logged in; 50014: Token expired;
-      if (response.data.code === 50008) {
-        MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
-        })
-      }
+      // if (response.data.code === 50008) {
+      //   MessageBox.confirm('You have been logged out, you can cancel to stay on this page, or log in again', 'Confirm logout', {
+      //     confirmButtonText: 'Re-Login',
+      //     cancelButtonText: 'Cancel',
+      //     type: 'warning'
+      //   }).then(() => {
+      //     store.dispatch('user/resetToken').then(() => {
+      //       location.reload()
+      //     })
+      //   })
+      // }
     }
 
     return response.data
   },
   error => {
-    console.log(error.response) // for debug
+    // console.log(error.response) // for debug
     const msg = error.response.data.message + ': ' + error.response.data.debug
     Message({
       message: msg,
