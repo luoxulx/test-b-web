@@ -43,7 +43,7 @@
     <el-dialog title="Video" :visible.sync="playVideo">
       <div>
         <video controls autoplay>
-          <source :src="videoSrc" type="video/mp4" />
+          <source :src="videoSrc" type="video/mp4">
           您的浏览器不支持 video 标签。
         </video>
       </div>
@@ -82,13 +82,15 @@ export default {
     videoPageList() {
       const params = { per_page: this.listPerPage, page: this.listCurrent }
       videoList(params).then(response => {
-        this.videoList = response.data
-        this.listTotal = response.meta.pagination.total
-        this.listCurrent = response.meta.pagination.current_page
-        this.listPerPage = response.meta.pagination.per_page
         this.loadingIcon = false
-      }).catch(error => {
-        console.error(error)
+        if (response.status === true) {
+          this.videoList = response.data
+          this.listTotal = response.meta.pagination.total
+          this.listCurrent = response.meta.pagination.current_page
+          this.listPerPage = response.meta.pagination.per_page
+        }
+      }).catch(() => {
+        return true
       })
     },
     handleSelectionChange(val) {
@@ -104,8 +106,10 @@ export default {
         return false
       }
       batchDeleteVideo({ ids: this.multipleSelected }).then(response => {
-        this.$message.success('successful')
-        this.refreshList()
+        if (response.status === true) {
+          this.$message.success('successful')
+          this.refreshList()
+        }
       }).catch(() => {
         return true
       })
@@ -116,10 +120,12 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        videoDelete(row.id).then(() => {
-          const index = this.videoList.indexOf(row)
-          this.videoList.splice(index, 1)
-          this.$message.success('Delete Successful')
+        videoDelete(row.id).then((response) => {
+          if (response.status === true) {
+            const index = this.videoList.indexOf(row)
+            this.videoList.splice(index, 1)
+            this.$message.success('Delete Successful')
+          }
         })
       }).catch(() => {
         return true

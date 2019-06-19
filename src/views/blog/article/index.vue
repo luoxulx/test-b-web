@@ -75,10 +75,12 @@ export default {
     articlePageList() {
       const params = { per_page: this.listPerPage, page: this.listCurrent }
       articleList(params).then(response => {
-        this.articleList = response.data
-        this.listTotal = response.meta.pagination.total
-        this.listCurrent = response.meta.pagination.current_page
-        this.listPerPage = response.meta.pagination.per_page
+        if (response.status === true) {
+          this.articleList = response.data
+          this.listTotal = response.meta.pagination.total
+          this.listCurrent = response.meta.pagination.current_page
+          this.listPerPage = response.meta.pagination.per_page
+        }
         this.loadingIcon = false
       }).catch(error => {
         console.error(error)
@@ -96,8 +98,10 @@ export default {
         return false
       }
       batchDeleteArticle({ ids: this.multipleSelected }).then(response => {
-        this.$message.success('successful')
-        this.refreshList()
+        if (response.status === true) {
+          this.$message.success('successful')
+          this.refreshList()
+        }
       }).catch(() => {
         return true
       })
@@ -109,9 +113,11 @@ export default {
         type: 'warning'
       }).then(() => {
         articleDelete(row.id).then((response) => {
-          const index = this.articleList.indexOf(row)
-          this.articleList.splice(index, 1)
-          this.$message.success('Delete Successful')
+          if (response.status === true) {
+            const index = this.articleList.indexOf(row)
+            this.articleList.splice(index, 1)
+            this.$message.success('Delete Successful')
+          }
         })
       }).catch(() => {
         return true

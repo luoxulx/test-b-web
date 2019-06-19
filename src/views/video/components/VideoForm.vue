@@ -68,7 +68,7 @@ export default {
   created() {
     this.videoForm = Object.assign({}, defaultVideoForm)
     if (this.isEdit === true) {
-      const id = this.$route.params && this.$route.params.id
+      const id = this.$route.params.id
       this.fetchVideoData(id)
     }
   },
@@ -79,12 +79,12 @@ export default {
           this.submitLoading = true
           if (this.isEdit === true) {
             videoUpdate(this.videoForm).then(response => {
-              this.videoForm = Object.assign({}, defaultVideoForm)
-              if (response.sattus === false) {
-                return false
-              } else {
+              if (response.status === true) {
+                this.videoForm = Object.assign({}, defaultVideoForm)
                 this.$message.success('update successful')
                 this.$router.push('/video/index')
+              } else {
+                return false
               }
             }).catch(error => {
               console.error(error)
@@ -92,11 +92,11 @@ export default {
             })
           } else {
             videoCreate(this.videoForm).then(response => {
-              if (response.sattus === false) {
-                return false
-              } else {
+              if (response.sattus === true) {
                 this.$message.success('create successful')
                 this.$router.push('/video/index')
+              } else {
+                return false
               }
             })
           }

@@ -5,8 +5,16 @@
         <div class="dashboard-text">Name: {{ name }}</div>
       </el-header>
       <el-main>
-        <el-row :gutter="20">
-          <el-col :span="20">
+        <el-row :gutter="24">
+          <el-col :span="24">
+            <el-carousel indicator-position="outside">
+              <el-carousel-item v-for="pic in bingPics" :key="pic.index">
+                <h3>{{ pic.copyright }}</h3>
+                <img :src="pic.url" width="100%">
+              </el-carousel-item>
+            </el-carousel>
+          </el-col>
+          <el-col :span="24">
             <div class="grid-content bg-purple">
               <el-calendar v-model="nowMonthDate" size="mini" />
             </div>
@@ -19,18 +27,42 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+import { getBingPicture } from '@/api'
 export default {
   name: 'Dashboard',
   data() {
     return {
-      nowMonthDate: new Date()
+      nowMonthDate: new Date(),
+      bingPics: []
     }
   },
   computed: {
     ...mapGetters([
       'name'
     ])
+  },
+  created() {
+    this.getBingPictures()
+  },
+  methods: {
+    getBingPictures() {
+      const param = {}
+      const idxArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+      const index = Math.floor(Math.random() * 16)
+      param.format = 'js'
+      param.n = 8
+      param.idx = idxArray[index]
+      getBingPicture(param).then(response => {
+        const tempList = response.data.images
+        for (const i in tempList) {
+          const temp = { index: i, url: tempList[i].real_url, copyright: tempList[i].copyright }
+          this.bingPics.push(temp)
+        }
+        console.log(this.bingPics)
+      }).catch(error => {
+        console.log(error)
+      })
+    }
   }
 }
 </script>

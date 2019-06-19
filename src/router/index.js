@@ -186,17 +186,25 @@ export const constantRoutes = [
   {
     path: 'external-link',
     component: Layout,
-    redirect: 'xxx',
+    // redirect: 'xxx',
     name: 'External Link',
     meta: { title: 'External Link', icon: 'link' },
     children: [
       {
+        path: 'https://tongji.baidu.com/web/25043645/homepage/index',
+        meta: { title: '百度统计', icon: 'baidutongji' }
+      },
+      {
         path: 'https://www.youtube.com/luoxulx',
-        meta: { title: 'YouTube', icon: 'link' }
+        meta: { title: 'YouTube', icon: 'youtube' }
       },
       {
         path: 'https://www.facebook.com/luoxulx',
-        meta: { title: 'Facebook', icon: 'link' }
+        meta: { title: 'Facebook', icon: 'facebook' }
+      },
+      {
+        path: 'https://github.com/luoxulx',
+        meta: { title: 'Github', icon: 'github' }
       }
     ]
   },

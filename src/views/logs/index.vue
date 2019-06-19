@@ -30,7 +30,7 @@
             </div>
           </el-col>
           <el-col :span="4">
-            <el-collapse accordion @change="handleSystemLogList" style="padding-left: 10px;">
+            <el-collapse accordion style="padding-left: 10px;" @change="handleSystemLogList">
               <el-collapse-item v-for="logfile in logFiles" :key="logfile" :title="logfile" :name="logfile">
                 <span>Size: {{ size }}</span>
               </el-collapse-item>
@@ -100,7 +100,7 @@ export default {
         }
       }).catch(error => {
         console.log(error)
-        this.$message.warning('server error')
+        this.$message.error('server error')
         this.loadingIcon = false
       })
     },
@@ -124,7 +124,7 @@ export default {
             this.levelColors = response.data.levelColors
           }
         }).catch(error => {
-          this.$message.warning('server error')
+          this.$message.error('server error')
           console.log(error)
           this.loadingIcon = false
         })

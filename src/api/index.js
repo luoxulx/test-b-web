@@ -24,11 +24,12 @@ export function filePatchUpload(data) {
 }
 export function getBingPicture(param) {
   return request({
-    url: '/bing/picture',
+    url: '/open/bing/pictures',
     method: 'get',
     params: param
   })
 }
+
 /** ----- open api end ----- */
 
 export function logout() {
