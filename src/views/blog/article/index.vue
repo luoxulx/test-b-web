@@ -22,6 +22,7 @@
               </el-tooltip>
             </template>
           </el-table-column>
+          <el-table-column prop="is_draft" label="草稿" width="50" />
           <el-table-column prop="updated_at" label="Update At" width="150" />
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
