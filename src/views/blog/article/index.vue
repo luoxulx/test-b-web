@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import { articleList, articleDelete, batchDeleteArticle } from '@/api'
+import { articleList, articleDelete, batchDeleteArticle, articleDetail } from '@/api'
 export default {
   name: 'ArticleIndex',
   data() {
@@ -132,8 +132,10 @@ export default {
       this.refreshList()
     },
     showArticleContent(row) {
-      this.articleContentVisible = true
-      this.articleContentValue = row.content
+      articleDetail(row.id).then(response => {
+        this.articleContentVisible = true
+        this.articleContentValue = response.data.content
+      })
     }
   }
 }
