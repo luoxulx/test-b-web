@@ -8,7 +8,9 @@
 import plugins from './plugins'
 import toolbar from './toolbar'
 import codesample from './codesample'
+import load from './dynamicLoadScript'
 import { pictureUpload } from '@/api'
+const tinymceCDN = 'https://cdn.tiny.cloud/1/ur9ww0d6omfe1qfno8hinl417ubih0jn2rd6svs30q2jmwpq/tinymce/5/tinymce.min.js' // 设置为仅 *.lnmpa.top 可用
 export default {
   name: 'Tinymce5',
   components: {},
@@ -82,10 +84,12 @@ export default {
     }
   },
   mounted() {
-    this.initTinymce()
+    this.init()
   },
   activated() {
-    this.initTinymce()
+    if (window.tinymce) {
+      this.initTinymce()
+    }
   },
   deactivated() {
     this.destroyTinymce()
@@ -94,18 +98,30 @@ export default {
     this.destroyTinymce()
   },
   methods: {
+    init() {
+      // dynamic load tinymce from cdn
+      load(tinymceCDN, (err) => {
+        if (err) {
+          this.$message.error(err.message)
+          return
+        }
+        this.initTinymce()
+      })
+    },
     initTinymce() {
       const _this = this
+      // const globalcounter = 1
       window.tinymce.init({
         // language: this.language,
         // lx-new-start
-        // tinydrive_token_provider: process.env.VUE_APP_BASE_API + 'auth/tiny/token',
-        // tinydrive_dropbox_app_key: 'aaa2',
+        tinydrive_token_provider: process.env.VUE_APP_BASE_API + 'auth/tiny/token',
+        tinydrive_dropbox_app_key: 'aaa2',
         // tinydrive_google_drive_key: 'aaa3',
         // tinydrive_google_drive_client_id: 'aaa4',
         // lx-end
-        language: 'zh_CN',
         selector: `#${this.tinymceId}`,
+        language: 'zh_CN',
+        language_url: 'https://cdn.jsdelivr.net/npm/tinymce-lang/langs/zh_CN.js',
         height: this.height,
         body_class: 'panel-body',
         object_resizing: false,
@@ -114,22 +130,24 @@ export default {
         menubar: this.menubar,
         plugins: plugins,
         codesample_languages: codesample,
-        browser_spellcheck: true,
-        spellchecker_rpc_url: process.env.VUE_APP_BASE_API + 'open/tiny/spellchecker',
+        // browser_spellcheck: true,
+        // spellchecker_rpc_url: process.env.VUE_APP_BASE_API + 'open/tiny/spellchecker',
         // codesample_content_css: [''],
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
-        paste_data_images: true,
-        // paste_preprocess(plugin, args) {
-        //   console.log(args)
-        // },
+        paste_merge_formats: true,
+        paste_postprocess(plugin, args) {
+          // console.log(args.node)
+        },
         code_dialog_height: 450,
         code_dialog_width: 1000,
         advlist_bullet_styles: 'square',
         advlist_number_styles: 'default',
         image_title: false,
         image_advtab: true,
+        // image_caption: false,
         imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+        // imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
         content_css: ['//fonts.googleapis.com/css?family=Lato:300,300i,400,400i', '//www.tiny.cloud/css/codepen.min.css'],
         default_link_target: '_blank',
         link_title: false,
@@ -180,12 +198,6 @@ export default {
     },
     getContent() {
       window.tinymce.get(this.tinymceId).getContent()
-    },
-    imageSuccessCBK(arr) {
-      const _this = this
-      arr.forEach(v => {
-        window.tinymce.get(_this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`)
-      })
     }
   }
 }

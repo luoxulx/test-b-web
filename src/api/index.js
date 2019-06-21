@@ -93,6 +93,14 @@ export function batchDeleteArticle(data) {
   })
 }
 
+export function draftArticle(data) {
+  return request({
+    url: 'article/draft/' + data.id,
+    method: 'put',
+    data
+  })
+}
+
 /** ----- category ----- */
 export function categoryList(params) {
   return request({

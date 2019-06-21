@@ -58,7 +58,6 @@ export default {
           const temp = { index: i, url: tempList[i].real_url, copyright: tempList[i].copyright }
           this.bingPics.push(temp)
         }
-        console.log(this.bingPics)
       }).catch(error => {
         console.log(error)
       })

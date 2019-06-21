@@ -22,7 +22,12 @@
               </el-tooltip>
             </template>
           </el-table-column>
-          <el-table-column prop="is_draft" label="草稿" width="50" />
+          <el-table-column label="草稿" width="65">
+            <template slot-scope="scope">
+              <el-button v-if="scope.row.is_draft == true" icon="el-icon-delete-solid" type="warning" size="mini" @click="draftArticle(scope.row, 0)" />
+              <el-button v-if="scope.row.is_draft == false" icon="el-icon-warning-outline" type="success" size="mini" @click="draftArticle(scope.row, 1)" />
+            </template>
+          </el-table-column>
           <el-table-column prop="updated_at" label="Update At" width="150" />
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
@@ -47,7 +52,7 @@
 </template>
 
 <script>
-import { articleList, articleDelete, batchDeleteArticle, articleDetail } from '@/api'
+import { articleList, articleDelete, batchDeleteArticle, articleDetail, draftArticle } from '@/api'
 export default {
   name: 'ArticleIndex',
   data() {
@@ -136,6 +141,14 @@ export default {
       articleDetail(row.id).then(response => {
         this.articleContentVisible = true
         this.articleContentValue = response.data.content
+      })
+    },
+    draftArticle(row, draft) {
+      draftArticle({ id: row.id, draft: draft }).then(response => {
+        if (response.status === true) {
+          this.$message.success('successful')
+          this.refreshList()
+        }
       })
     }
   }
