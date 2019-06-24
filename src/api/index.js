@@ -283,6 +283,41 @@ export function videoDelete(id) {
   })
 }
 
+/** ----- Links ----- */
+export function linkList(params) {
+  return request({
+    url: 'link',
+    method: 'get',
+    params: params
+  })
+}
+export function linkDetail(id) {
+  return request({
+    url: 'link/' + id,
+    method: 'get'
+  })
+}
+export function linkCreate(data) {
+  return request({
+    url: 'link',
+    method: 'post',
+    data
+  })
+}
+export function linkUpdate(data) {
+  return request({
+    url: 'link/' + data.id,
+    method: 'put',
+    data
+  })
+}
+export function linkDelete(id) {
+  return request({
+    url: 'link/' + id,
+    method: 'delete'
+  })
+}
+
 /** ----- system log view ----- */
 export function systemLogList(file, offset) {
   let uri = 'system/logs'

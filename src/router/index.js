@@ -154,6 +154,24 @@ export const constantRoutes = [
         name: 'Edit Comment',
         component: () => import('@/views/blog/comment/edit'),
         hidden: true
+      },
+      {
+        path: 'link',
+        name: 'Link',
+        component: () => import('@/views/blog/link/index'),
+        meta: { title: '链接', icon: 'link' }
+      },
+      {
+        path: 'link/create',
+        name: 'Create Link',
+        component: () => import('@/views/blog/link/create'),
+        hidden: true
+      },
+      {
+        path: 'link/edit/:id',
+        name: 'Edit Link',
+        component: () => import('@/views/blog/link/edit'),
+        hidden: true
       }
     ]
   },
