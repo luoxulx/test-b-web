@@ -1,15 +1,22 @@
 <template>
-  <div>
-    <el-upload :action="uploadUrl" :limit="1" :data="extra" list-type="picture-card" :on-preview="picClickPreview" :on-remove="picClickRemove" :on-success="picUploadSuccess" :on-error="picUploadError" :on-progress="picUploadProgress" :before-upload="picBeforeUpload" :before-remove="picBeforeRemove">
+  <div class="upload-container">
+    <el-upload class="image-uploader" :action="uploadUrl" :limit="1" :data="extra" :headers="headers" :show-file-list="false" :on-success="picUploadSuccess" :on-error="picUploadError" :on-progress="picUploadProgress" :before-upload="picBeforeUpload">
       <i class="el-icon-plus" />
+      <div class="el-upload__text"><em>点击上传</em></div>
     </el-upload>
-    <el-dialog :visible.sync="dialogVisible">
-      <img width="100%" :src="value" alt="">
-    </el-dialog>
+    <div v-show="imageUrl.length>1" class="image-preview">
+      <div class="image-preview-wrapper">
+        <img :src="imageUrl" alt="">
+        <div class="image-preview-action">
+          <i class="el-icon-delete" @click="picClickRemove" />
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { getToken } from '@/utils/auth'
 export default {
   name: 'PicUpload',
   props: {
@@ -27,19 +34,27 @@ export default {
       dialogVisible: false,
       extra: {
         dir: 'thumbnail'
+      },
+      headers: {
+        Authorization: getToken()
       }
     }
   },
+  computed: {
+    imageUrl() {
+      return this.value
+    }
+  },
   methods: {
-    picClickPreview(file) {
-      this.value = file.url
-      this.dialogVisible = true
+    emitInput(val) {
+      this.$emit('input', val)
     },
     picClickRemove(file, fileList) {
+      this.emitInput('')
       console.log(file, fileList)
     },
     picUploadSuccess(res, file, fileList) {
-      this.value = res.data.url
+      this.emitInput(res.data.url)
       console.log(res, file, fileList)
     },
     picUploadError(res, file, fileList) {
@@ -50,17 +65,60 @@ export default {
     },
     picBeforeUpload(file) {
       console.log(file)
-    },
-    picBeforeRemove(file, fileList) {
-      console.log(file, fileList)
     }
   }
 }
 </script>
 
-<style scoped>
-  .el-upload {
-    width: 85px !important;
-    height: auto;
+<style lang="scss" scoped>
+  @import "@/styles/mixin.scss";
+  .upload-container {
+    width: 100%;
+    position: relative;
+    @include clearfix;
+    .image-uploader {
+      width: 35%;
+      float: left;
+    }
+    .image-preview {
+      width: 150px;
+      height: auto;
+      position: relative;
+      border: 1px dashed #d9d9d9;
+      .image-preview-wrapper {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        img {
+          width: 100%;
+          height: 100%;
+        }
+      }
+      .image-preview-action {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        cursor: default;
+        text-align: center;
+        color: #fff;
+        opacity: 0;
+        font-size: 16px;
+        background-color: rgba(0, 0, 0, .5);
+        transition: opacity .3s;
+        cursor: pointer;
+        text-align: center;
+        line-height: 75px;
+        .el-icon-delete {
+          font-size: 24px;
+        }
+      }
+      &:hover {
+        .image-preview-action {
+          opacity: 1;
+        }
+      }
+    }
   }
 </style>
