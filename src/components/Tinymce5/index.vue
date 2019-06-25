@@ -147,6 +147,7 @@ export default {
         paste_auto_cleanup_on_paste: false,
         paste_postprocess(plugin, args) {
           // console.log(args.node)
+          // 应该服务端抓取远程所有 img 标签 src 并保存，返回 url，然后整体替换
         },
         paste_enable_default_filters: false, // 不过滤
         fullpage_default_font_size: '12px',
