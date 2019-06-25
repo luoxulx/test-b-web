@@ -138,19 +138,18 @@ export default {
         // spellchecker_rpc_url: process.env.VUE_APP_BASE_API + 'open/tiny/spellchecker',
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
-        paste_retain_style_properties: 'all', // 不过滤
-        paste_word_valid_elements: 'all', // 不过滤
+        // paste_retain_style_properties: 'all', // 不过滤
+        // paste_word_valid_elements: 'all', // 不过滤
         paste_data_images: true,
-        paste_convert_word_fake_lists: false,
-        paste_webkit_styles: 'all', // 不过滤
+        // paste_convert_word_fake_lists: false, // 还是要过滤，不然太脏
+        // paste_webkit_styles: 'all', // 不过滤
+        // paste_enable_default_filters: false, // 不过滤
         paste_merge_formats: true,
         paste_auto_cleanup_on_paste: false,
         paste_postprocess(plugin, args) {
           // console.log(args.node)
           // 应该服务端抓取远程所有 img 标签 src 并保存，返回 url，然后整体替换
         },
-        paste_enable_default_filters: false, // 不过滤
-        fullpage_default_font_size: '12px',
         code_dialog_height: 450,
         code_dialog_width: 1000,
         advlist_bullet_styles: 'square',
