@@ -112,6 +112,12 @@ export default {
       const _this = this
       // const globalcounter = 1
       window.tinymce.init({
+        toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
+        toolbar_items_size: 'small',
+        plugins: plugins,
+        codesample_languages: codesample,
+        // codesample_content_css: [''],
+        menubar: this.menubar,
         // language: this.language,
         // lx-new-start
         tinydrive_token_provider: process.env.VUE_APP_BASE_API + 'auth/tiny/token',
@@ -124,31 +130,40 @@ export default {
         language_url: 'https://cdn.jsdelivr.net/npm/tinymce-lang/langs/zh_CN.js',
         height: this.height,
         body_class: 'panel-body',
-        object_resizing: false,
-        toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
-        toolbar_items_size: 'small',
-        menubar: this.menubar,
-        plugins: plugins,
-        codesample_languages: codesample,
+        object_resizing: true,
+        spellchecker_dialog: true,
+        spellchecker_whitelist: ['Ephox', 'Moxiecode'],
+        tinycomments_mode: 'embedded',
         // browser_spellcheck: true,
         // spellchecker_rpc_url: process.env.VUE_APP_BASE_API + 'open/tiny/spellchecker',
-        // codesample_content_css: [''],
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
+        paste_retain_style_properties: 'all', // 不过滤
+        paste_word_valid_elements: 'all', // 不过滤
+        paste_data_images: true,
+        paste_convert_word_fake_lists: false,
+        paste_webkit_styles: 'all', // 不过滤
         paste_merge_formats: true,
+        paste_auto_cleanup_on_paste: false,
         paste_postprocess(plugin, args) {
           // console.log(args.node)
         },
+        paste_enable_default_filters: false, // 不过滤
+        fullpage_default_font_size: '12px',
         code_dialog_height: 450,
         code_dialog_width: 1000,
         advlist_bullet_styles: 'square',
         advlist_number_styles: 'default',
         image_title: false,
         image_advtab: true,
-        // image_caption: false,
+        image_caption: true,
         imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
         // imagetools_toolbar: 'rotateleft rotateright | flipv fliph | editimage imageoptions',
         content_css: ['//fonts.googleapis.com/css?family=Lato:300,300i,400,400i', '//www.tiny.cloud/css/codepen.min.css'],
+        content_style: '.mce-annotation { background: #fff0b7; } .tc-active-annotation {background: #ffe168; color: black; }',
+        importcss_append: true,
+        template_cdate_format: '[CDATE: %m/%d/%Y : %H:%M:%S]',
+        template_mdate_format: '[MDATE: %m/%d/%Y : %H:%M:%S]',
         default_link_target: '_blank',
         link_title: false,
         nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin

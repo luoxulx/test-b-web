@@ -11,34 +11,43 @@
         <el-form ref="articleFormRef" :model="articleForm" :rules="articleFormRule" size="mini" label-width="135px">
           <el-tabs v-model="activeTagName" type="border-card">
             <el-tab-pane label="Chinese" name="first">
-              <el-form-item prop="category_id" label="Category">
-                <el-select v-model="articleForm.category_id" clearable filterable required>
-                  <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id" />
-                </el-select>
-              </el-form-item>
-              <el-form-item prop="title" label="Title">
-                <el-input v-model="articleForm.title" required />
-              </el-form-item>
-              <el-form-item prop="slug" label="Slug">
-                <el-input v-model="articleForm.slug" />
-              </el-form-item>
-              <el-form-item label="Tag">
-                <el-select v-model="articleForm.tags" clearable multiple filterable>
-                  <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id" />
-                </el-select>
-              </el-form-item>
-              <el-form-item prop="source" label="Source">
-                <el-input v-model="articleForm.source" required />
-              </el-form-item>
-              <el-form-item prop="description" label="Description">
-                <el-input v-model="articleForm.description" type="textarea" rows="3" />
-              </el-form-item>
-              <el-form-item prop="is_draft" label="Draft">
-                <el-switch v-model="articleForm.is_draft" />
-              </el-form-item>
-              <el-form-item prop="published_at" label="发布时间">
-                <el-date-picker v-model="articleForm.published_at" type="datetime" placeholder="发布时间" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" />
-              </el-form-item>
+              <el-row :gutter="20">
+                <el-col :span="8">
+                  <el-form-item prop="category_id" label="Category">
+                    <el-select v-model="articleForm.category_id" clearable filterable required>
+                      <el-option v-for="item in categoryList" :key="item.id" :label="item.name" :value="item.id" />
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item label="Tag">
+                    <el-select v-model="articleForm.tags" clearable multiple filterable>
+                      <el-option v-for="item in tagList" :key="item.id" :label="item.name" :value="item.id" />
+                    </el-select>
+                  </el-form-item>
+                  <el-form-item prop="is_draft" label="Draft">
+                    <el-switch v-model="articleForm.is_draft" />
+                  </el-form-item>
+                  <el-form-item prop="published_at" label="发布时间">
+                    <el-date-picker v-model="articleForm.published_at" type="datetime" placeholder="发布时间" format="yyyy-MM-dd HH:mm:ss" value-format="yyyy-MM-dd HH:mm:ss" />
+                  </el-form-item>
+                  <el-form-item label="Thumbnail">
+                    <pic-upload v-model="articleForm.thumbnail" />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="14">
+                  <el-form-item prop="title" label="Title">
+                    <el-input v-model="articleForm.title" required />
+                  </el-form-item>
+                  <el-form-item prop="slug" label="Slug">
+                    <el-input v-model="articleForm.slug" />
+                  </el-form-item>
+                  <el-form-item prop="source" label="Source">
+                    <el-input v-model="articleForm.source" required />
+                  </el-form-item>
+                  <el-form-item prop="description" label="Description">
+                    <el-input v-model="articleForm.description" type="textarea" rows="3" />
+                  </el-form-item>
+                </el-col>
+              </el-row>
               <el-form-item prop="content" label="Content">
                 <tinymce5 ref="contentEditor" v-model="articleForm.content" :height="400" />
               </el-form-item>
@@ -69,6 +78,7 @@
 
 <script>
 import Tinymce5 from '@/components/Tinymce5'
+import PicUpload from '@/components/PicUpload'
 import { articleDetail, articleCreate, articleUpdate, tagAll, categoryAll } from '@/api'
 const defaultArticleForm = {
   id: undefined,
@@ -88,7 +98,7 @@ const defaultArticleForm = {
 }
 export default {
   name: 'ArticleForm',
-  components: { Tinymce5 },
+  components: { Tinymce5, PicUpload },
   props: {
     isEdit: {
       type: Boolean,
