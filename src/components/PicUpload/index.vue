@@ -22,7 +22,7 @@ export default {
   props: {
     uploadUrl: {
       type: String,
-      default: process.env.VUE_APP_BASE_API + 'file/upload'
+      default: process.env.VUE_APP_BASE_API + 'pic/upload'
     },
     value: {
       type: String,
