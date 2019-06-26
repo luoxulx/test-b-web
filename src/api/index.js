@@ -8,20 +8,23 @@ export function login(data) {
     data
   })
 }
+// 无论上传 img|file，key 都=file
 export function pictureUpload(data) {
+  return request({
+    url: '/pic/upload',
+    method: 'post',
+    data
+  })
+}
+
+export function fileUpload(data) {
   return request({
     url: '/file/upload',
     method: 'post',
     data
   })
 }
-export function filePatchUpload(data) {
-  return request({
-    url: '/file/patch_upload',
-    method: 'post',
-    data
-  })
-}
+
 export function getBingPicture(param) {
   return request({
     url: '/open/bing/pictures',
@@ -245,6 +248,14 @@ export function commentDelete(id) {
   return request({
     url: 'comment/' + id,
     method: 'delete'
+  })
+}
+
+export function batchDeleteComment(data) {
+  return request({
+    url: 'comment/batch',
+    method: 'delete',
+    data
   })
 }
 

@@ -188,6 +188,7 @@ export default {
           const uploadFormData = new FormData()
           uploadFormData.append('file', blobInfo.blob())
           uploadFormData.append('dir', 'editor')
+          // 默认不会压缩图片uploadFormData.append('resize', false)
           progress(10)
           pictureUpload(uploadFormData).then(response => {
             progress(95)

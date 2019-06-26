@@ -33,7 +33,8 @@ export default {
     return {
       dialogVisible: false,
       extra: {
-        dir: 'thumbnail'
+        dir: 'thumbnail',
+        resize: true // 开启压缩,且 width=640
       },
       headers: {
         Authorization: getToken()

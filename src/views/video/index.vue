@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { videoList, videoDelete, batchDeleteVideo } from '@/api'
+import { videoList, videoDelete } from '@/api'
 export default {
   name: 'VideoIndex',
   data() {
@@ -105,14 +105,7 @@ export default {
         this.$message.warning('Please select at least one row. ')
         return false
       }
-      batchDeleteVideo({ ids: this.multipleSelected }).then(response => {
-        if (response.status === true) {
-          this.$message.success('successful')
-          this.refreshList()
-        }
-      }).catch(() => {
-        return true
-      })
+      this.$message.warning('403 xxx')
     },
     deleteVideo(row) {
       this.$confirm('Confirm Delete', '提示', {
