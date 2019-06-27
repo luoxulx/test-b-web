@@ -17,7 +17,7 @@
 
 <script>
 import { getToken } from '@/utils/auth'
-import { deletePicture } from '@/api'
+import { batchDeletePicture } from '@/api'
 export default {
   name: 'PicUpload',
   props: {
@@ -55,9 +55,9 @@ export default {
       this.$emit('input', val)
     },
     picClickRemove(file, fileList) {
-      this.emitInput('')
       console.log(file, fileList)
-      deletePicture().then()
+      batchDeletePicture().then()
+      this.emitInput('')
     },
     picUploadSuccess(res, file, fileList) {
       this.emitInput(res.data.url)

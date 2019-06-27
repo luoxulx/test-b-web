@@ -9,30 +9,6 @@ export function login(data) {
   })
 }
 
-export function deletePicture(data) {
-  return request({
-    url: '/pic/remove',
-    method: 'delete',
-    data
-  })
-}
-// 无论上传 img|file，key 都=file
-export function pictureUpload(data) {
-  return request({
-    url: '/pic/upload',
-    method: 'post',
-    data
-  })
-}
-
-export function fileUpload(data) {
-  return request({
-    url: '/file/upload',
-    method: 'post',
-    data
-  })
-}
-
 export function getBingPicture(param) {
   return request({
     url: '/open/bing/pictures',
@@ -56,6 +32,52 @@ export function userInfo() {
     method: 'get'
   })
 }
+
+/** ----- file||pic start ----- */
+export function fileList(param) {
+  // file list paginate
+  return request({
+    url: '/file/list',
+    method: 'get',
+    params: param
+  })
+}
+
+export function deletePicture(id) {
+  // 文件列表页删除调用该接口,会查找是否正在使用中
+  return request({
+    url: '/pic/' + id,
+    method: 'delete'
+  })
+}
+
+export function batchDeletePicture(data) {
+  // 上传错了时调用该接口，参数 array, pic: real_path
+  return request({
+    url: '/pic/remove',
+    method: 'delete',
+    data
+  })
+}
+
+export function pictureUpload(data) {
+  // 无论上传 img|file，key 都=file
+  return request({
+    url: '/pic/upload',
+    method: 'post',
+    data
+  })
+}
+
+export function fileUpload(data) {
+  // 上传文件
+  return request({
+    url: '/file/upload',
+    method: 'post',
+    data
+  })
+}
+/** ----- file||pic end ----- */
 
 /** ----- article ----- */
 export function articleList(params) {
