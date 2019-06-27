@@ -44,13 +44,13 @@
                     <el-input v-model="articleForm.source" required />
                   </el-form-item>
                   <el-form-item prop="description" label="Description">
-                    <el-input v-model="articleForm.description" type="textarea" rows="3" />
+                    <el-input v-model="articleForm.description" type="textarea" rows="4" />
                   </el-form-item>
                 </el-col>
               </el-row>
               <el-divider />
               <el-form-item prop="content" label="Content">
-                <tinymce5 ref="contentEditor" v-model="articleForm.content" :height="400" />
+                <tinymce5 ref="contentEditor" v-model="articleForm.content" :height="450" />
               </el-form-item>
             </el-tab-pane>
             <el-tab-pane label="English" name="second">
@@ -61,10 +61,10 @@
                 <el-input v-model="articleForm.en.source" />
               </el-form-item>
               <el-form-item label="Description en">
-                <el-input v-model="articleForm.en.description" type="textarea" rows="3" />
+                <el-input v-model="articleForm.en.description" type="textarea" rows="4" />
               </el-form-item>
               <el-form-item label="Content en">
-                <tinymce5 ref="contentEditorEn" v-model="articleForm.en.content" :height="400" />
+                <tinymce5 ref="contentEditorEn" v-model="articleForm.en.content" :height="450" />
               </el-form-item>
             </el-tab-pane>
           </el-tabs>
