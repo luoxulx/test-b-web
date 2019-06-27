@@ -46,7 +46,6 @@
                   <el-form-item prop="description" label="Description">
                     <el-input v-model="articleForm.description" type="textarea" rows="3" />
                   </el-form-item>
-                  <small>粘贴：一定要修改源代码，添加<code>pre</code>标签；直接插入代码不用改</small>
                 </el-col>
               </el-row>
               <el-divider />
