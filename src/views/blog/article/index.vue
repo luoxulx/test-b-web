@@ -17,22 +17,21 @@
           <el-table-column prop="title" label="Title" width="200" show-overflow-tooltip />
           <el-table-column label="Description" show-overflow-tooltip>
             <template slot-scope="scope">
-              <el-tooltip class="item" effect="dark" content="点击打开预览" placement="left">
-                <p @click="showArticleContent(scope.row)">{{ scope.row.description }}</p>
-              </el-tooltip>
+              <p>{{ scope.row.description }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="草稿" width="65">
+          <el-table-column label="草稿" width="48">
             <template slot-scope="scope">
-              <el-button v-if="scope.row.is_draft == true" icon="el-icon-delete-solid" type="warning" size="mini" @click="draftArticle(scope.row, 0)" />
-              <el-button v-if="scope.row.is_draft == false" icon="el-icon-warning-outline" type="success" size="mini" @click="draftArticle(scope.row, 1)" />
+              <el-button v-if="scope.row.is_draft == true" type="danger" size="mini" @click="draftArticle(scope.row, 0)">Y</el-button>
+              <el-button v-if="scope.row.is_draft == false" type="success" size="mini" @click="draftArticle(scope.row, 1)">N</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="updated_at" label="Update At" width="150" />
-          <el-table-column fixed="right" label="操作" width="150">
+          <el-table-column prop="updated_at" label="Update At" width="138" />
+          <el-table-column fixed="right" label="操作" width="186">
             <template slot-scope="scope">
+              <el-button type="primary" size="mini" @click="showArticleContent(scope.row)">预览</el-button>
               <el-button type="warning" size="mini">
-                <router-link :to="{path: '/blog/article/edit/'+scope.row.id}">Edit</router-link>
+                <router-link :to="{path: '/blog/article/edit/'+scope.row.id}">编辑</router-link>
               </el-button>
               <el-button type="danger" size="mini" @click="deleteArticle(scope.row)">删除</el-button>
             </template>

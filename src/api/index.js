@@ -8,6 +8,14 @@ export function login(data) {
     data
   })
 }
+
+export function deletePicture(data) {
+  return request({
+    url: '/pic/remove',
+    method: 'delete',
+    data
+  })
+}
 // 无论上传 img|file，key 都=file
 export function pictureUpload(data) {
   return request({
