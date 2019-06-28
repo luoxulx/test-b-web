@@ -219,6 +219,14 @@ export const constantRoutes = [
         meta: { title: '百度统计', icon: 'baidutongji' }
       },
       {
+        path: 'https://portal.qiniu.com/insight/nb/favorite',
+        meta: { title: 'logkit-pro', icon: 'logs' }
+      },
+      {
+        path: 'https://www.bing.com/webmaster/home/mysites?orde=1&url=https%3A%2F%2Fwww.lnmpa.top%2F',
+        meta: { title: 'Bing Website Manager', icon: 'bing' }
+      },
+      {
         path: 'https://www.youtube.com/luoxulx',
         meta: { title: 'YouTube', icon: 'youtube' }
       },
