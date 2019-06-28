@@ -51,7 +51,7 @@ export default {
       listTotal: 0,
       listCurrent: 1,
       listPageSelect: [10, 20, 50, 100, 200],
-      listPerPage: 10
+      listPerPage: 20
     }
   },
   created() {

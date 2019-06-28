@@ -14,7 +14,11 @@
           <el-table-column prop="id" label="ID" width="50" />
           <el-table-column prop="category_name" label="Category" width="80" show-overflow-tooltip />
           <el-table-column prop="user_name" label="User" width="80" show-overflow-tooltip />
-          <el-table-column prop="title" label="Title" width="200" show-overflow-tooltip />
+          <el-table-column prop="title" label="Title" width="200" show-overflow-tooltip>
+            <template slot-scope="scope">
+              <a :href="'https://www.lnmpa.top/' + scope.row.slug" target="_blank">{{ scope.row.title }}</a>
+            </template>
+          </el-table-column>
           <el-table-column label="Description" show-overflow-tooltip>
             <template slot-scope="scope">
               <p>{{ scope.row.description }}</p>

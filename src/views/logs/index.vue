@@ -40,8 +40,8 @@
       </el-main>
     </el-container>
     <el-dialog title="Trace" :visible.sync="exceptionDialog" width="80%">
-      <div style="white-space: pre-line;background: #bfe1f5;color: #def5e5; padding: 5px;">
-        <pre class="line-numbers"><code class="language-json" style="white-space: pre-line">{{ exceptionTrace }}</code></pre>
+      <div>
+        <pre class="language-json"><code>{{ exceptionTrace }}</code></pre>
       </div>
       <span slot="footer" class="dialog-footer">
         <el-button size="mini" @click="exceptionDialog = false">取 消</el-button>

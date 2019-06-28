@@ -88,7 +88,7 @@ const defaultArticleForm = {
   tags: [],
   is_draft: false,
   published_at: '',
-  view_count: 0,
+  view_count: 17, // 默认 17
   title: '',
   slug: '',
   source: '',

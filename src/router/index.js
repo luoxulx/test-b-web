@@ -165,7 +165,7 @@ export const constantRoutes = [
         path: 'link',
         name: 'Link',
         component: () => import('@/views/blog/link/index'),
-        meta: { title: '链接', icon: 'link' }
+        meta: { title: '链接', icon: 'friendlink' }
       },
       {
         path: 'link/create',
@@ -220,7 +220,7 @@ export const constantRoutes = [
       },
       {
         path: 'https://portal.qiniu.com/insight/nb/favorite',
-        meta: { title: 'logkit-pro', icon: 'logs' }
+        meta: { title: 'logkit-pro', icon: 'logkit' }
       },
       {
         path: 'https://www.bing.com/webmaster/home/mysites?orde=1&url=https%3A%2F%2Fwww.lnmpa.top%2F',
