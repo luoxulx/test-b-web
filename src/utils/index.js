@@ -108,3 +108,16 @@ export function param2Obj(url) {
       '"}'
   )
 }
+
+// 格式化文件大小
+export function parseFileSize(value) {
+  if (value === null || value === '') {
+    return '0 Bytes'
+  }
+  const unitArr = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
+  // const index = 0
+  const srcsize = parseFloat(value)
+  const index = Math.floor(Math.log(srcsize) / Math.log(1024))
+  const size = srcsize / Math.pow(1024, index)
+  return size.toFixed(2) + unitArr[index]
+}

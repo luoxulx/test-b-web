@@ -1,30 +1,22 @@
 <template>
   <div class="upload-container">
-    <el-upload class="image-uploader" :action="uploadUrl" :limit="1" :data="extra" :headers="headers" :show-file-list="false" :on-success="picUploadSuccess" :on-error="picUploadError" :on-progress="picUploadProgress" :before-upload="picBeforeUpload">
+    <el-upload class="image-uploader" :action="uploadUrl" :limit="1" :data="extra" list-type="picture-card" :on-success="picUploadSuccess" :on-progress="picUploadProgress" :before-upload="picBeforeUpload" :on-preview="picUploadPreview" :on-remove="picClickRemove">
       <i class="el-icon-plus" />
-      <div class="el-upload__text"><em>点击上传</em></div>
     </el-upload>
-    <div v-show="imageUrl.length>1" class="image-preview">
-      <div class="image-preview-wrapper">
-        <img :src="imageUrl" alt="">
-        <div class="image-preview-action">
-          <i class="el-icon-delete" @click="picClickRemove" />
-        </div>
-      </div>
-    </div>
+    <el-progress :percentage="uploadPercentage" />
+
+    <el-dialog :visible.sync="picDialogVisible">
+      <img width="100%" :src="imageUrl" alt="">
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { getToken } from '@/utils/auth'
-import { batchDeletePicture } from '@/api'
+import { deleteQiniuFile, uploadToken, saveFileInfo } from '@/api'
+import { parseFileSize } from '@/utils'
 export default {
   name: 'PicUpload',
   props: {
-    uploadUrl: {
-      type: String,
-      default: process.env.VUE_APP_BASE_API + 'pic/upload'
-    },
     value: {
       type: String,
       default: ''
@@ -32,23 +24,32 @@ export default {
   },
   data() {
     return {
-      dialogVisible: false,
+      cdnHost: process.env.CDN_HOST || 'https://net.lnmpa.top/',
+      uploadUrl: '',
+      uploadPercentage: 0,
+      picDialogVisible: false,
       extra: {
-        dir: 'thumbnail',
-        resize: true // 开启压缩,且 width=640
+        key: 'thumbnail',
+        token: ''
       },
-      headers: {
-        Authorization: getToken()
-      }
+      picPath: {},
+      picMime: ''
     }
   },
   computed: {
     imageUrl() {
       if (this.value == null) {
-        return []
+        return ''
       }
       return this.value
     }
+  },
+  mounted() {
+    uploadToken(this.extra).then(res => {
+      this.extra.token = res.data.token
+      this.extra.key = res.data.key
+      this.uploadUrl = res.data.uri
+    })
   },
   methods: {
     emitInput(val) {
@@ -56,75 +57,50 @@ export default {
     },
     picClickRemove(file, fileList) {
       console.log(file, fileList)
-      batchDeletePicture().then()
+      deleteQiniuFile({ key: this.picPath }).then(response => {
+        console.log(response)
+      })
       this.emitInput('')
     },
     picUploadSuccess(res, file, fileList) {
-      this.emitInput(res.data.url)
-      console.log(res, file, fileList)
+      const tempData = {
+        path: res.key,
+        original_name: file.name,
+        url: this.cdnHost + res.key + '-pic540',
+        size: parseFileSize(file.size),
+        mime: this.picMime,
+        hash: res.hash
+      }
+
+      this.picPath = tempData.path
+      this.emitInput(tempData.url)
+
+      saveFileInfo(tempData).then(res2 => {
+        console.log(res2)
+      })
+      this.picUploadProgress = 100
     },
-    picUploadError(res, file, fileList) {
-      console.log(res, file, fileList)
+    picUploadPreview(file) {
+      console.log(file)
+      this.picDialogVisible = true
     },
     picUploadProgress(event, file, fileList) {
-      console.log(event, file, fileList)
+      console.log(event)
+      // this.picUploadProgress = Number(event.percent)
     },
     picBeforeUpload(file) {
-      console.log(file)
+      // this.picUploadProgress = 10
+      this.picMime = file.type || ''
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-  @import "@/styles/mixin.scss";
-  .upload-container {
-    width: 100%;
-    position: relative;
-    @include clearfix;
-    .image-uploader {
-      width: 35%;
-      float: left;
-    }
-    .image-preview {
-      width: 150px;
-      height: auto;
-      position: relative;
-      border: 1px dashed #d9d9d9;
-      .image-preview-wrapper {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        img {
-          width: 100%;
-          height: 100%;
-        }
-      }
-      .image-preview-action {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        left: 0;
-        top: 0;
-        cursor: default;
-        text-align: center;
-        color: #fff;
-        opacity: 0;
-        font-size: 16px;
-        background-color: rgba(0, 0, 0, .5);
-        transition: opacity .3s;
-        cursor: pointer;
-        text-align: center;
-        line-height: 75px;
-        .el-icon-delete {
-          font-size: 24px;
-        }
-      }
-      &:hover {
-        .image-preview-action {
-          opacity: 1;
-        }
-      }
-    }
+<style>
+  .el-upload {
+    border: 1px dotted rebeccapurple;
+    max-width: 75px;
+    max-height: 75px;
+    line-height: 75px;
   }
 </style>

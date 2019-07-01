@@ -9,7 +9,8 @@ import plugins from './plugins'
 import toolbar from './toolbar'
 import codesample from './codesample'
 import load from './dynamicLoadScript'
-import { pictureUpload } from '@/api'
+import { uploadToken, saveFileInfo } from '@/api'
+import { parseFileSize } from '@/utils'
 const tinymceCDN = 'https://cdn.tiny.cloud/1/ur9ww0d6omfe1qfno8hinl417ubih0jn2rd6svs30q2jmwpq/tinymce/5/tinymce.min.js' // 设置为仅 *.lnmpa.top 可用
 export default {
   name: 'Tinymce5',
@@ -49,6 +50,7 @@ export default {
   },
   data() {
     return {
+      cdnHost: process.env.CDN_HOST || 'https://net.lnmpa.top/',
       hasChange: false,
       hasInit: false,
       tinymceId: this.id,
@@ -183,19 +185,59 @@ export default {
           })
         },
         images_upload_credentials: true,
+        images_dataimg_filter(img) {
+          setTimeout(() => {
+            // base64 转换为 blob 图像
+            const $image = window.$(img)
+            $image.removeAttr('width')
+            $image.removeAttr('height')
+            if ($image[0].height && $image[0].width) {
+              $image.attr('data-wscntype', 'image')
+              $image.attr('data-wscnh', $image[0].height)
+              $image.attr('data-wscnw', $image[0].width)
+              $image.addClass('wscnph')
+            }
+          }, 0)
+
+          return img
+        },
         images_upload_handler(blobInfo, success, failure, progress) {
           progress(0)
-          const uploadFormData = new FormData()
-          uploadFormData.append('file', blobInfo.blob())
-          uploadFormData.append('dir', 'editor')
-          // 默认不会压缩图片uploadFormData.append('resize', false)
-          progress(10)
-          pictureUpload(uploadFormData).then(response => {
-            progress(95)
-            success(response.data.url)
-            progress(100)
-          }).catch(error => {
-            failure(error)
+
+          uploadToken({ key: 'editor' }).then(response => {
+            progress(50)
+            const uri = response.data.uri
+            const uploadFormData = new FormData()
+            uploadFormData.append('token', response.data.token)
+            uploadFormData.append('key', response.data.key)
+            uploadFormData.append('file', blobInfo.blob())
+            progress(60)
+            fetch(uri, { method: 'post', body: uploadFormData }).then(res => {
+              progress(95)
+              res.json().then(result => {
+                if (result.error) {
+                  failure(result.error)
+                  return false
+                }
+                progress(100)
+                console.log(1, blobInfo.blob())
+                const tempData = {
+                  path: result.key,
+                  url: this.cdnHost + result.key + '-pic540',
+                  size: parseFileSize(blobInfo.blob().size),
+                  mime: blobInfo.blob().type,
+                  original_name: blobInfo.blob().name,
+                  hash: result.hash
+                }
+                success(tempData.url)
+
+                saveFileInfo(tempData).then(res2 => {
+                  console.log(res2)
+                })
+              })
+            }).catch(error => {
+              failure(error)
+            })
           })
         }
       })
