@@ -3,8 +3,8 @@
     <el-upload class="image-uploader" :action="uploadUrl" :limit="1" :data="extra" list-type="picture-card" :on-success="picUploadSuccess" :on-progress="picUploadProgress" :before-upload="picBeforeUpload" :on-preview="picUploadPreview" :on-remove="picClickRemove">
       <i class="el-icon-plus" />
     </el-upload>
-    <el-progress :percentage="uploadPercentage" />
-
+    <el-input v-model="imageUrl" type="text" value="" />
+    <el-progress :percentage="uploadPercentage" :text-inside="true" />
     <el-dialog :visible.sync="picDialogVisible">
       <img width="100%" :src="imageUrl" alt="">
     </el-dialog>
@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      cdnHost: process.env.CDN_HOST || 'https://net.lnmpa.top/',
+      cdnHost: 'https://net.lnmpa.top/',
       uploadUrl: '',
       uploadPercentage: 0,
       picDialogVisible: false,
@@ -78,7 +78,7 @@ export default {
       saveFileInfo(tempData).then(res2 => {
         console.log(res2)
       })
-      this.picUploadProgress = 100
+      // this.picUploadProgress = 100
     },
     picUploadPreview(file) {
       console.log(file)

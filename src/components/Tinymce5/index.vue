@@ -50,7 +50,7 @@ export default {
   },
   data() {
     return {
-      cdnHost: process.env.CDN_HOST || 'https://net.lnmpa.top/',
+      cdnHost: 'https://net.lnmpa.top/',
       hasChange: false,
       hasInit: false,
       tinymceId: this.id,
