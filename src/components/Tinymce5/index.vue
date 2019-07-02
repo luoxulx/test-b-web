@@ -220,10 +220,9 @@ export default {
                   return false
                 }
                 progress(100)
-                console.log(1, blobInfo.blob())
                 const tempData = {
                   path: result.key,
-                  url: this.cdnHost + result.key + '-pic540',
+                  url: _this.cdnHost + result.key + '-pic540',
                   size: parseFileSize(blobInfo.blob().size),
                   mime: blobInfo.blob().type,
                   original_name: blobInfo.blob().name,
