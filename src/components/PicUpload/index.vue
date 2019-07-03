@@ -1,10 +1,9 @@
 <template>
   <div class="upload-container">
-    <el-upload class="image-uploader" :action="uploadUrl" :limit="1" :data="extra" list-type="picture-card" :on-success="picUploadSuccess" :on-progress="picUploadProgress" :before-upload="picBeforeUpload" :on-preview="picUploadPreview" :on-remove="picClickRemove">
+    <el-upload ref="qiniuUpload" class="image-uploader" :action="uploadUrl" :limit="1" :auto-upload="false" :data="extra" list-type="picture-card" :on-success="picUploadSuccess" :on-change="picOnchange" :before-upload="picBeforeUpload" :on-preview="picUploadPreview" :on-remove="picClickRemove">
       <i class="el-icon-plus" />
     </el-upload>
-    <el-input v-model="imageUrl" type="text" value="" />
-    <el-progress :percentage="uploadPercentage" :text-inside="true" />
+    <el-input v-model="imageUrl" type="text" value="" style="max-width: 80%;" />&nbsp;<el-button size="mini" type="primary" @click="submitUpload">上传</el-button>
     <el-dialog :visible.sync="picDialogVisible">
       <img width="100%" :src="imageUrl" alt="">
     </el-dialog>
@@ -25,14 +24,15 @@ export default {
   data() {
     return {
       cdnHost: 'https://net.lnmpa.top/',
-      uploadUrl: '',
-      uploadPercentage: 0,
+      uploadUrl: 'https://upload-na0.qiniup.com', // web 直传地址
       picDialogVisible: false,
+      accept: [],
       extra: {
-        key: 'thumbnail',
+        original_name: '',
+        key: 'thumbnail', // 默认thumbnail
         token: ''
       },
-      picPath: {},
+      picPath: {}, // 上传成功后，供删除按钮使用
       picMime: ''
     }
   },
@@ -44,14 +44,10 @@ export default {
       return this.value
     }
   },
-  mounted() {
-    uploadToken(this.extra).then(res => {
-      this.extra.token = res.data.token
-      this.extra.key = res.data.key
-      this.uploadUrl = res.data.uri
-    })
-  },
   methods: {
+    submitUpload() {
+      this.$refs.qiniuUpload.submit()
+    },
     emitInput(val) {
       this.$emit('input', val)
     },
@@ -76,21 +72,25 @@ export default {
       this.emitInput(tempData.url)
 
       saveFileInfo(tempData).then(res2 => {
-        console.log(res2)
+        console.info('Upload Info Save Successful. ', res2)
       })
-      // this.picUploadProgress = 100
     },
     picUploadPreview(file) {
       console.log(file)
       this.picDialogVisible = true
     },
-    picUploadProgress(event, file, fileList) {
-      console.log(event)
-      // this.picUploadProgress = Number(event.percent)
+    picOnchange(file, fileList) {
+      this.extra.original_name = file.name
+      this.picMime = file.raw.type || ''
+
+      uploadToken(this.extra).then(res => {
+        this.extra.token = res.data.token
+        this.extra.key = res.data.key
+      })
     },
     picBeforeUpload(file) {
-      // this.picUploadProgress = 10
       this.picMime = file.type || ''
+      // console.log(file)
     }
   }
 }

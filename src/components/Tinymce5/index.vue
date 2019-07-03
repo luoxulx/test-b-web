@@ -204,7 +204,7 @@ export default {
         images_upload_handler(blobInfo, success, failure, progress) {
           progress(0)
 
-          uploadToken({ key: 'editor' }).then(response => {
+          uploadToken({ key: 'bbbb', original_name: blobInfo.blob().name }).then(response => {
             progress(50)
             const uri = response.data.uri
             const uploadFormData = new FormData()
@@ -231,7 +231,7 @@ export default {
                 success(tempData.url)
 
                 saveFileInfo(tempData).then(res2 => {
-                  console.log(res2)
+                  console.info('Upload Info Save Successful. ', res2)
                 })
               })
             }).catch(error => {
