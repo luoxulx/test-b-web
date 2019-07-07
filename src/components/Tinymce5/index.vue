@@ -204,7 +204,7 @@ export default {
         images_upload_handler(blobInfo, success, failure, progress) {
           progress(0)
 
-          uploadToken({ key: 'bbbb', original_name: blobInfo.blob().name }).then(response => {
+          uploadToken({ key: 'editor', original_name: blobInfo.blob().name }).then(response => {
             progress(50)
             const uri = response.data.uri
             const uploadFormData = new FormData()
