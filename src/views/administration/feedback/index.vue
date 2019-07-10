@@ -5,17 +5,16 @@
         <el-button type="default" size="mini" @click="refreshList">刷新</el-button>
       </el-header>
       <el-main>
-        <el-table v-loading="loadingIcon" :data="fileList" :element-loading-text="loadingText" tooltip-effect="dark" element-loading-spinner="el-icon-loading" border style="width: 100%" size="small" @selection-change="handleSelectionChange">
+        <el-table v-loading="loadingIcon" :data="feedbackList" :element-loading-text="loadingText" tooltip-effect="dark" element-loading-spinner="el-icon-loading" border style="width: 100%" size="small" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" />
           <el-table-column prop="id" label="ID" width="50" />
-          <el-table-column prop="path" label="Path" show-overflow-tooltip />
-          <el-table-column prop="original_name" label="Original Name" show-overflow-tooltip />
-          <el-table-column prop="mime" label="Mime" width="85" />
-          <el-table-column prop="size" label="Size" width="75" />
-          <el-table-column prop="url" label="Url" show-overflow-tooltip />
+          <el-table-column prop="nickname" label="昵称" show-overflow-tooltip />
+          <el-table-column prop="email" label="邮箱" show-overflow-tooltip />
+          <el-table-column prop="content" label="内容" show-overflow-tooltip />
+          <el-table-column prop="created_at" label="创建时间" width="135" />
           <el-table-column fixed="right" label="操作" width="66">
             <template slot-scope="scope">
-              <el-button type="danger" size="mini" @click="deleteOneFile(scope.row)">删除</el-button>
+              <el-button type="danger" size="mini" @click="deleteOneFeedback(scope.row)">删除</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -28,14 +27,14 @@
 </template>
 
 <script>
-import { fileList, deletePicture } from '@/api'
+import { feedbackList, deleteFeedback } from '@/api'
 export default {
   name: 'Files',
   data() {
     return {
       loadingIcon: true,
       loadingText: '数据加载中...',
-      fileList: [],
+      feedbackList: [],
       multipleSelected: [],
       listTotal: 0,
       listCurrent: 1,
@@ -54,10 +53,10 @@ export default {
     },
     filePageList() {
       const params = { per_page: this.listPerPage, page: this.listCurrent }
-      fileList(params).then(response => {
+      feedbackList(params).then(response => {
         this.loadingIcon = false
         if (response.status === true) {
-          this.fileList = response.data
+          this.feedbackList = response.data
           this.listTotal = response.meta.pagination.total
           this.listCurrent = response.meta.pagination.current_page
           this.listPerPage = response.meta.pagination.per_page
@@ -74,20 +73,16 @@ export default {
       this.listCurrent = val
       this.refreshList()
     },
-    deleteOneFile(row) {
+    deleteOneFeedback(row) {
       this.$confirm('Confirm Delete This Picture ?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        if (row.filename.substring(row.filename.length - 4) === 'png') {
-          this.$message.error('只能删图像! ')
-          return true
-        }
-        deletePicture(row.id).then((response) => {
+        deleteFeedback(row.id).then((response) => {
           if (response.status === true) {
-            const index = this.fileList.indexOf(row)
-            this.fileList.splice(index, 1)
+            const index = this.feedbackList.indexOf(row)
+            this.feedbackList.splice(index, 1)
             this.$message.success('Delete Successful')
           }
         })

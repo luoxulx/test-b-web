@@ -50,13 +50,47 @@ export function saveFileInfo(data) {
     data
   })
 }
+
 export function deleteQiniuFile() {
   return request({
     url: 'xx',
     method: 'delete'
   })
 }
+
+export function fileList(params) {
+  return request({
+    url: 'file/list',
+    method: 'get',
+    params: params
+  })
+}
+
+export function deletePicture(params) {
+  return request({
+    url: 'file',
+    method: 'delete',
+    params
+  })
+}
 /** ----- qiniu storage file||pic end ----- */
+
+/** ----- feedback-start ----- */
+export function feedbackList(params) {
+  return request({
+    url: 'feedback',
+    method: 'get',
+    params: params
+  })
+}
+
+export function deleteFeedback(id) {
+  return request({
+    url: 'feedback/' + id,
+    method: 'delete'
+  })
+}
+/** ----- feedback-end ----- */
 
 /** ----- article ----- */
 export function articleList(params) {

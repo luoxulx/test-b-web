@@ -78,6 +78,12 @@ export const constantRoutes = [
         name: 'File',
         component: () => import('@/views/administration/file/index'),
         meta: { title: 'File', icon: 'picture' }
+      },
+      {
+        path: 'feedback',
+        name: 'Feedback',
+        component: () => import('@/views/administration/feedback/index'),
+        meta: { title: '反馈', icon: 'logs' }
       }
     ]
   },

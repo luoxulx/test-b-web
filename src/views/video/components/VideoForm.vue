@@ -92,7 +92,7 @@ export default {
             })
           } else {
             videoCreate(this.videoForm).then(response => {
-              if (response.sattus === true) {
+              if (response.status === true) {
                 this.$message.success('create successful')
                 this.$router.push('/video/index')
               } else {
