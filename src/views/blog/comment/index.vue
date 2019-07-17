@@ -4,22 +4,16 @@
       <el-header height="30">
         <el-button type="default" size="mini" @click="refreshList">刷新</el-button>
         <el-button type="danger" size="mini" @click="batchDelete">批量删除</el-button>
-        <!--<el-button type="primary" size="mini">-->
-        <!--<router-link :to="{path: '/blog/comment/create'}">Create</router-link>-->
-        <!--</el-button>-->
       </el-header>
       <el-main>
         <el-table v-loading="loadingIcon" :data="commentList" :element-loading-text="loadingText" tooltip-effect="dark" element-loading-spinner="el-icon-loading" border style="width: 100%" size="small" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" />
           <el-table-column prop="id" label="ID" width="50" />
-          <el-table-column prop="nickname" label="Nickname" width="155" show-overflow-tooltip />
-          <el-table-column prop="email" label="Email" width="155">
-            <template slot-scope="scope">
-              <span>{{ scope.row.email }}</span>
-            </template>
-          </el-table-column>
-          <el-table-column prop="site" label="Site" width="175" />
+          <el-table-column prop="article_title" label="Article" width="145" show-overflow-tooltip />
+          <el-table-column prop="nickname" label="Nickname" width="135" show-overflow-tooltip />
           <el-table-column prop="content" label="Comment Content" show-overflow-tooltip />
+          <el-table-column prop="origin" label="Origin" width="200" show-overflow-tooltip />
+          <el-table-column prop="user_agent" label="Agent" width="125" show-overflow-tooltip />
           <el-table-column prop="created_at" label="Created At" width="150" />
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
