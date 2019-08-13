@@ -8,7 +8,7 @@
       <el-main>
         <el-table v-loading="loadingIcon" :data="commentList" :element-loading-text="loadingText" tooltip-effect="dark" element-loading-spinner="el-icon-loading" border style="width: 100%" size="small" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" />
-          <el-table-column prop="id" label="ID" width="50" />
+          <el-table-column prop="id" label="ID" width="50" type="xxx" />
           <el-table-column prop="article_title" label="Article" width="145" show-overflow-tooltip />
           <el-table-column prop="nickname" label="Nickname" width="135" show-overflow-tooltip />
           <el-table-column prop="content" label="Comment Content" show-overflow-tooltip />

@@ -1,19 +1,17 @@
 FROM node:10.8.0-alpine
-WORKDIR /app
+WORKDIR /var/web/lnmpa-web
 
 ADD ["./package.json", "./public/index.html", "./public/favicon.ico", "./"]
+ADD ["./babel.config.js", "./.postcssrc.js", "./postcss.config.js", "./.eslintignore", "./.eslintrc.js", "./"]
 
 RUN apk update \
   && apk add python2 \
   && apk add git \
   && npm install --no-optional
 
-
-ADD ["./.postcssrc.js", "./.eslintignore", "./.eslintrc.js", ".env.production", "./"]
-
 ADD ./build ./build
 ADD ./src ./src
-ADD ./public/static ./public/static
+ADD public/static ./public/static
 
 RUN  npm run build
 
