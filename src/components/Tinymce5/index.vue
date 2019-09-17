@@ -122,8 +122,8 @@ export default {
         menubar: this.menubar,
         // language: this.language,
         // lx-new-start
-        tinydrive_token_provider: process.env.VUE_APP_BASE_API + 'auth/tiny/token',
-        tinydrive_dropbox_app_key: 'aaa2',
+        // tinydrive_token_provider: process.env.VUE_APP_BASE_API + 'auth/tiny/token',
+        // tinydrive_dropbox_app_key: 'aaa2',
         // tinydrive_google_drive_key: 'aaa3',
         // tinydrive_google_drive_client_id: 'aaa4',
         // lx-end
