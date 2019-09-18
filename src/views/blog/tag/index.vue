@@ -4,14 +4,12 @@
       <el-header height="30">
         <el-button type="default" size="mini" @click="refreshList">刷新</el-button>
         <el-button type="danger" size="mini" @click="batchDelete">批量删除</el-button>
-        <el-button type="primary" size="mini">
-          <router-link :to="{path: '/blog/tag/create'}">Create</router-link>
-        </el-button>
+        <router-link :to="{path: '/blog/tag/create'}"><el-button type="primary" size="mini">创建</el-button></router-link>
       </el-header>
       <el-main>
         <el-table v-loading="loadingIcon" :data="tagList" :element-loading-text="loadingText" tooltip-effect="dark" element-loading-spinner="el-icon-loading" border style="width: 100%" size="small" @selection-change="handleSelectionChange">
           <el-table-column type="selection" width="50" />
-          <el-table-column prop="id" label="ID" width="50" />
+          <el-table-column prop="id" label="ID" width="50" sortable />
           <el-table-column prop="name" label="Tag Name" width="155" show-overflow-tooltip />
           <el-table-column prop="color" label="Tag Color" width="155">
             <template slot-scope="scope">
@@ -20,7 +18,7 @@
           </el-table-column>
           <el-table-column prop="style" label="Tag Style Name" width="175" />
           <el-table-column prop="description" label="Tag Description" show-overflow-tooltip />
-          <el-table-column prop="updated_at" label="Update At" width="150" />
+          <el-table-column prop="updated_at" label="Update At" width="150" sortable />
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
               <el-button type="warning" size="mini">
