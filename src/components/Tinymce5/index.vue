@@ -11,7 +11,7 @@ import codesample from './codesample'
 import load from './dynamicLoadScript'
 import { uploadToken, saveFileInfo } from '@/api'
 import { parseFileSize } from '@/utils'
-const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.4/tinymce.min.js' // 设置为仅 *.lnmpa.top 可用
+const tinymceCDN = 'https://cdn.jsdelivr.net/npm/tinymce-all-in-one@4.9.4/tinymce.min.js'
 export default {
   name: 'Tinymce5',
   components: {},

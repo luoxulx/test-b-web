@@ -10,6 +10,11 @@ const dynamicLoadScript = (src, callback) => {
   const existingScript = document.getElementById(src)
   const cb = callback || function() {}
 
+  // to fixed https://github.com/PanJiaChen/vue-element-admin/issues/2144
+  if (!loadedTinymce()) {
+    callbacks.push(cb)
+  }
+
   if (!existingScript) {
     const script = document.createElement('script')
     script.src = src // src url for the third-party library being loaded.
