@@ -121,3 +121,19 @@ export function parseFileSize(value) {
   const size = srcsize / Math.pow(1024, index)
   return size.toFixed(2) + unitArr[index]
 }
+
+// 获取最近 12 个月的日期,eg: ['2019-09-09'....]
+export function getTwelveMonth() {
+  const monthArray = []
+  const date = new Date()
+  date.setMonth(date.getMonth() + 1, 1)
+
+  for (let i = 0; i < 12; i++) {
+    date.setMonth(date.getMonth() - 1)
+    let m = date.getMonth() + 1
+    m = m < 10 ? '0' + m : m
+    monthArray.push(date.getFullYear() + '-' + (m))
+  }
+
+  return monthArray.sort()
+}
