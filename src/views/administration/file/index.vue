@@ -6,14 +6,14 @@
       </el-header>
       <el-main>
         <el-table v-loading="loadingIcon" :data="fileList" :element-loading-text="loadingText" tooltip-effect="dark" element-loading-spinner="el-icon-loading" border style="width: 100%" size="small" @selection-change="handleSelectionChange">
-          <el-table-column type="selection" width="50" />
-          <el-table-column prop="id" label="ID" width="50" />
+          <el-table-column type="selection" width="45" />
+          <el-table-column prop="id" label="ID" width="55" />
           <el-table-column prop="path" label="Path" show-overflow-tooltip />
           <el-table-column prop="original_name" label="Original Name" show-overflow-tooltip />
-          <el-table-column prop="mime" label="Mime" width="85" />
-          <el-table-column prop="size" label="Size" width="75" />
+          <el-table-column prop="mime" label="Mime" width="90" />
+          <el-table-column prop="size" label="Size" width="80" />
           <el-table-column prop="url" label="Url" show-overflow-tooltip />
-          <el-table-column fixed="right" label="操作" width="66">
+          <el-table-column fixed="right" label="操作" width="70">
             <template slot-scope="scope">
               <el-button type="danger" size="mini" @click="deleteOneFile(scope.row)">删除</el-button>
             </template>
