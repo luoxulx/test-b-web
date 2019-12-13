@@ -17,6 +17,7 @@
           <el-table-column prop="created_at" label="Created At" width="150" sortable />
           <el-table-column fixed="right" label="操作" width="150">
             <template slot-scope="scope">
+              <el-button type="success" size="mini">查看回复</el-button>
               <el-button type="warning" size="mini">
                 <router-link :to="{path: '/blog/comment/edit/'+scope.row.id}">Edit</router-link>
               </el-button>
