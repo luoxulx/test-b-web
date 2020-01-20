@@ -22,7 +22,7 @@
               <p>{{ scope.row.description }}</p>
             </template>
           </el-table-column>
-          <el-table-column label="草稿" width="50">
+          <el-table-column label="草稿" width="51">
             <template slot-scope="scope">
               <el-button v-if="scope.row.is_draft == true" type="danger" size="mini" @click="draftArticle(scope.row, 0)">Y</el-button>
               <el-button v-if="scope.row.is_draft == false" type="success" size="mini" @click="draftArticle(scope.row, 1)">N</el-button>
